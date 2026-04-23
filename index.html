@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -932,17 +932,11 @@ function fetchConTimeout(url,opciones,ms){
   return fetch(url,{...opciones,signal:ctrl.signal}).finally(()=>clearTimeout(id));
 }
 
-async function generarNroOrden(){
-  try{
-    const r=await fetchConTimeout(SCRIPT_URL,{mode:"cors"},8000);
-    if(!r.ok) throw new Error("HTTP "+r.status);
-    const data=await r.json();
-    if(!data.orden) throw new Error("Sin orden");
-    return data.orden;
-  }catch(err){
-    console.warn("Apps Script no disponible:",err.message);
-    return null; // señal de fallo
-  }
+function generarNroOrden(){
+  // Número local: B- + timestamp parcial + random para evitar colisiones
+  const base=2300+Math.floor((Date.now()-1700000000000)/60000)%9000;
+  const rand=Math.floor(Math.random()*9)+1;
+  return "B-"+base+rand;
 }
 
 async function confirmarPedido(){
@@ -952,29 +946,22 @@ async function confirmarPedido(){
   const celular=document.getElementById("cli_celular").value.trim();
   if(!nombre||!apellido||!email||!celular){alert("Completá todos los campos");return;}
 
-  // Mostrar estado de carga
   const btnConfirmar=document.querySelector("#modalCliente button[onclick='confirmarPedido()']");
   const textoOriginal=btnConfirmar?btnConfirmar.textContent:"";
   if(btnConfirmar){btnConfirmar.disabled=true;btnConfirmar.textContent="Registrando...";}
 
-  const nroOrden=await generarNroOrden();
-
-  if(!nroOrden){
-    if(btnConfirmar){btnConfirmar.disabled=false;btnConfirmar.textContent=textoOriginal;}
-    alert("⚠️ No se pudo conectar con el servidor para generar el número de orden.\n\nPor favor:\n• Asegurate de tener conexión a internet\n• Intentá de nuevo en unos segundos\n\nSi el problema persiste, avisá a Aluwal para registrar el pedido manualmente.");
-    return;
-  }
+  const nroOrden=generarNroOrden();
 
   const tot=carrito.reduce((s,it)=>s+it.precioTotal,0);
   const detalle=carrito.map(it=>`${TLBL[it.tipo]} ${it.ancho}x${it.alto}mm ${it.color} ${VLBL[it.vidrio]} x${it.cantidad}`).join(" | ");
   const fecha=new Date().toLocaleDateString("es-AR");
 
-  // Guardar en Google Sheets (POST — no importa si falla, ya se generó el nro)
-  fetchConTimeout(SCRIPT_URL,{
+  // Guardar en Google Sheets (no-cors: fire and forget)
+  fetch(SCRIPT_URL,{
     method:"POST",
-    mode:"cors",
+    mode:"no-cors",
     body:JSON.stringify({orden:nroOrden,fecha,nombre,apellido,email,celular,detalle,total:"$"+fmt(tot)})
-  },10000).catch(()=>console.warn("POST a Sheets falló, orden ya generada:",nroOrden));
+  }).catch(()=>console.warn("POST a Sheets falló, orden:",nroOrden));
 
   document.getElementById("modalCliente").style.display="none";
   if(btnConfirmar){btnConfirmar.disabled=false;btnConfirmar.textContent=textoOriginal;}
