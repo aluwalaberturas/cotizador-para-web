@@ -924,7 +924,7 @@ function abrirModal(){
   document.getElementById("modalCliente").style.display="block";
 }
 
-const SCRIPT_URL="https://script.google.com/macros/s/AKfycbwx3wWpk53brCQgKcDYtU5v4VzCwwya4du1TEwJh-cyTpg1AY92Umdjdpyto4YE1jPtsg/exec";
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbxCRHrUZVr0T_2yGZE1EGlaJKDq3VvQa49UBrv89a19OPp6Bcg-2C_nJIorlKrFlYGZBQ/exec";
 
 function fetchConTimeout(url,opciones,ms){
   const ctrl=new AbortController();
@@ -932,11 +932,17 @@ function fetchConTimeout(url,opciones,ms){
   return fetch(url,{...opciones,signal:ctrl.signal}).finally(()=>clearTimeout(id));
 }
 
-function generarNroOrden(){
-  // Número local: B- + timestamp parcial + random para evitar colisiones
-  const base=2300+Math.floor((Date.now()-1700000000000)/60000)%9000;
-  const rand=Math.floor(Math.random()*9)+1;
-  return "B-"+base+rand;
+async function generarNroOrden(){
+  try{
+    const r=await fetchConTimeout(SCRIPT_URL,{mode:"cors"},8000);
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const data=await r.json();
+    if(!data.orden) throw new Error("Sin orden");
+    return data.orden;
+  }catch(err){
+    console.warn("Apps Script no disponible:",err.message);
+    return null;
+  }
 }
 
 async function confirmarPedido(){
@@ -950,13 +956,19 @@ async function confirmarPedido(){
   const textoOriginal=btnConfirmar?btnConfirmar.textContent:"";
   if(btnConfirmar){btnConfirmar.disabled=true;btnConfirmar.textContent="Registrando...";}
 
-  const nroOrden=generarNroOrden();
+  const nroOrden=await generarNroOrden();
+
+  if(!nroOrden){
+    if(btnConfirmar){btnConfirmar.disabled=false;btnConfirmar.textContent=textoOriginal;}
+    alert("⚠️ No se pudo conectar con el servidor.\n\nVerificá tu conexión e intentá de nuevo.");
+    return;
+  }
 
   const tot=carrito.reduce((s,it)=>s+it.precioTotal,0);
   const detalle=carrito.map(it=>`${TLBL[it.tipo]} ${it.ancho}x${it.alto}mm ${it.color} ${VLBL[it.vidrio]} x${it.cantidad}`).join(" | ");
   const fecha=new Date().toLocaleDateString("es-AR");
 
-  // Guardar en Google Sheets (no-cors: fire and forget)
+  // Guardar en Google Sheets
   fetch(SCRIPT_URL,{
     method:"POST",
     mode:"no-cors",
