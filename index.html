@@ -1625,8 +1625,6 @@ function ppApply(){
       const el=document.getElementById('pp_'+k);
       if(el){
         let val=parseFloat(el.value)||0;
-        // Guardar pesos de perfiles en g/m en Sheets (enteros, más legibles)
-        if(/^P\d+$|^PA30/.test(k)) val=Math.round(val*1000);
         s[k]=val;
       }
     });
@@ -1686,7 +1684,7 @@ document.getElementById("alto").addEventListener("input",actualizarPreview);
 document.querySelector(".logo-img").style.cursor="pointer";
 document.querySelector(".logo-img").onclick=()=>irPaso(1);
 // URL del Apps Script desplegado — esta se reemplaza al final
-const PRECIOS_URL="https://script.google.com/macros/s/AKfycbwPl__TXym0Ldrohlj9OyxkCVwjfUNPBmKO51oWWWmWhUUY24Fr0_4xbqZSGFVgPqeM6A/exec";
+const PRECIOS_URL="https://script.google.com/macros/s/AKfycbx8IKPa0Ck0V5SGuMcgEg0BkotgbcL1zZISDyZeXnFCgW1L0SnRB2_cY-Cred_LDCo-mQ/exec";
 
 // 1) Llenar inputs con valores por defecto como fallback inicial
 Object.entries(PP_ORIG).forEach(([k,v])=>{
@@ -1701,8 +1699,6 @@ fetch(PRECIOS_URL+'?t='+Date.now())
     if(d && !d.error){
       Object.entries(d).forEach(([k,v])=>{
         const el=document.getElementById('pp_'+k);
-        // Pesos de perfiles guardados en g/m en Sheets → convertir a kg/m
-        if(/^P\d+$|^PA30/.test(k)) v=v/1000;
         if(el) el.value=v;
       });
     }
