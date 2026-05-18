@@ -1619,7 +1619,18 @@ function ppApply(){
   BIPUNTO_MOD=n('BIPUNTO_MOD');BIPUNTO_A30=n('BIPUNTO_A30');P[6255]=n('P6255')||0.424;P[6206]=n('P6206')||0.186;P[6205]=n('P6205')||0.411;P[6066]=n('P6066')||0.545;P[6038]=n('P6038')||0.594;P[6039]=n('P6039')||0.329;TEJM_P=n('TEJM_P');MOSQ_Nm=n('MOSQ_Nm');MOSQ_Om=n('MOSQ_Om');B09_P=n('B09_P')||120;B70_P=n('B70_P')||850;MOSQ_B_u=n('MOSQ_B_u');MOSQ_ADR_u=n('MOSQ_ADR_u');MOSQ_D_u=n('MOSQ_D_u');E73_u=n('E73_u');R46_u=n('R46_u');T21_u=n('T21_u');S9_u=n('S9_u');T88_u=n('T88_u');E79_u=n('E79_u');E66_u=n('E66_u');E78_u=n('E78_u');
   E69_u=n('E69_u');T96_u=n('T96_u');H81H105_u=n('H81H105_u');H16H63_u=n('H16H63_u');H52_u=n('H52_u');H87_u=n('H87_u');H45_u=n('H45_u');H45F_u=n('H45F_u');H43_u=n('H43_u');H48_u=n('H48_u');H44_u=n('H44_u');H79_u=n('H79_u');
   document.querySelectorAll('.pp-inp.pp-changed').forEach(e=>e.classList.remove('pp-changed'));
-  try{const s={};Object.keys(PP_ORIG).forEach(k=>{const el=document.getElementById('pp_'+k);if(el)s[k]=parseFloat(el.value)||0;});localStorage.setItem('aluwal_precios',JSON.stringify(s));}catch(e){}
+  try{
+    const s={};
+    Object.keys(PP_ORIG).forEach(k=>{
+      const el=document.getElementById('pp_'+k);
+      if(el) s[k]=parseFloat(el.value)||0;
+    });
+    fetch(PRECIOS_URL,{
+      method:'POST',
+      mode:'no-cors',
+      body:JSON.stringify({password:'aluwal2024',prices:s})
+    });
+  }catch(e){console.warn('No se pudieron guardar precios en Sheets',e);}
   actualizarPreview();
   const st=document.getElementById('pp-status');
   st.textContent='✓ Cambios aplicados y guardados — '+(new Date().toLocaleTimeString());
@@ -1669,9 +1680,31 @@ document.getElementById("ancho").addEventListener("input",actualizarPreview);
 document.getElementById("alto").addEventListener("input",actualizarPreview);
 document.querySelector(".logo-img").style.cursor="pointer";
 document.querySelector(".logo-img").onclick=()=>irPaso(1);
-Object.entries(PP_ORIG).forEach(([k,v])=>{const el=document.getElementById('pp_'+k);if(el)el.value=v;});
-try{const s=localStorage.getItem('aluwal_precios');if(s){const d=JSON.parse(s);Object.entries(d).forEach(([k,v])=>{const el=document.getElementById('pp_'+k);if(el)el.value=v;});}}catch(e){}
-ppApply();
+// URL del Apps Script desplegado — esta se reemplaza al final
+const PRECIOS_URL="https://script.google.com/macros/s/AKfycbwPl__TXym0Ldrohlj9OyxkCVwjfUNPBmKO51oWWWmWhUUY24Fr0_4xbqZSGFVgPqeM6A/exec";
+
+// 1) Llenar inputs con valores por defecto como fallback inicial
+Object.entries(PP_ORIG).forEach(([k,v])=>{
+  const el=document.getElementById('pp_'+k);
+  if(el) el.value=v;
+});
+
+// 2) Traer precios actualizados desde Google Sheets
+fetch(PRECIOS_URL+'?t='+Date.now())
+  .then(r=>r.json())
+  .then(d=>{
+    if(d && !d.error){
+      Object.entries(d).forEach(([k,v])=>{
+        const el=document.getElementById('pp_'+k);
+        if(el) el.value=v;
+      });
+    }
+    ppApply();
+  })
+  .catch(e=>{
+    console.warn('No se pudieron cargar precios de Sheets, usando defaults',e);
+    ppApply();
+  });
 if(new URLSearchParams(window.location.search).get("admin")==="aluwal2024")ppShowPass();
 </script>
 </body>
