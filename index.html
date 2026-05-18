@@ -951,7 +951,7 @@ function premarcoExtra(a,h,kg){
     return(metros*P[6066]*kg+acc_f)*(1+MRG);
   }
   const metros=(2*(a+40)+2*(h+40))/1000;
-  const acc_f=S9_u*Math.round(2*(a+h)/520)+E79_u*4+T88_u*Math.round(2*(a+h)/650)+E66_u*4;
+  const acc_f=S9_u*Math.round(2*(a+h)/1000)+E79_u*4+T88_u*Math.round(2*(a+h)/1250)+E66_u*4;
   return(metros*P[6205]*kg+acc_f)*(1+MRG);
 }
 function resolvePrecios(){
