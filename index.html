@@ -927,9 +927,10 @@ function mosquiteroExtra(a,h,kg){
     const acc_f=E73_u*4+R46_u*2+T21_u*20;
     return(cA+tope+cTejido+B09+B70+acc_f)*(1+MRG);
   }
-  const esCorrediza=tipoSel==="corrediza"||tipoSel==="corrediza3";
-  const cA=esCorrediza?(a+2*h)/1000*P[6255]*kg:2*(a+h)/1000*P[6255]*kg;
-  const cTejido=esCorrediza?(a/2/1000)*(h/1000)*TEJM_P:(a/1000)*(h/1000)*TEJM_P;
+  const esCorrediza=tipoSel==="corrediza";
+  const esCorrediza3=tipoSel==="corrediza3";
+  const cA=esCorrediza?(a+2*h)/1000*P[6255]*kg:esCorrediza3?2*(a/3+h)/1000*P[6255]*kg:2*(a+h)/1000*P[6255]*kg;
+  const cTejido=esCorrediza?(a/2/1000)*(h/1000)*TEJM_P:esCorrediza3?(a/3/1000)*(h/1000)*TEJM_P:(a/1000)*(h/1000)*TEJM_P;
   const burlN=2*(a+h)/1000*MOSQ_Nm;
   const burlO=2*a/1000*MOSQ_Om;
   const acc_f=MOSQ_B_u*4+MOSQ_ADR_u*4+MOSQ_D_u*16;
