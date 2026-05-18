@@ -1623,7 +1623,12 @@ function ppApply(){
     const s={};
     Object.keys(PP_ORIG).forEach(k=>{
       const el=document.getElementById('pp_'+k);
-      if(el) s[k]=parseFloat(el.value)||0;
+      if(el){
+        let val=parseFloat(el.value)||0;
+        // Guardar pesos de perfiles en g/m en Sheets (enteros, más legibles)
+        if(/^P\d+$|^PA30/.test(k)) val=Math.round(val*1000);
+        s[k]=val;
+      }
     });
     fetch(PRECIOS_URL,{
       method:'POST',
@@ -1696,6 +1701,8 @@ fetch(PRECIOS_URL+'?t='+Date.now())
     if(d && !d.error){
       Object.entries(d).forEach(([k,v])=>{
         const el=document.getElementById('pp_'+k);
+        // Pesos de perfiles guardados en g/m en Sheets → convertir a kg/m
+        if(/^P\d+$|^PA30/.test(k)) v=v/1000;
         if(el) el.value=v;
       });
     }
