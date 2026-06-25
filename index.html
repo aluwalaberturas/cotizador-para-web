@@ -559,6 +559,7 @@ input[type=number]:focus{border-bottom-color:var(--black);}
         </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
           <button class="btn-clear" onclick="abrirModal()">⬇ Descargar PDF</button>
+          <button class="btn-clear" id="btnEnviarInterno" onclick="enviarAlInterno()" style="display:none;background:#111;color:#fff;border-color:#111">→ Presupuesto interno</button>
           <button class="btn-clear" onclick="limpiarCarrito()">Limpiar todo</button>
         </div>
       </div>
@@ -1275,6 +1276,21 @@ function renderCarrito(){
 }
 function quitarItem(i){carrito.splice(i,1);renderCarrito();}
 function limpiarCarrito(){carrito=[];renderCarrito();}
+function enviarAlInterno(){
+  if(carrito.length===0){alert('Agregá productos al presupuesto primero');return;}
+  window.parent.postMessage({
+    type:'aluwal_cart',
+    items:carrito.map(it=>({
+      tipo:it.tipo,ancho:it.ancho,alto:it.alto,cantidad:it.cantidad,
+      color:it.color,vidrio:it.vidrio,precioUnit:it.precioUnit,precioTotal:it.precioTotal,
+      label:(TLBL[it.tipo]||it.tipo)+' '+it.ancho+'×'+it.alto+'mm '+it.color+' '+(VLBL[it.vidrio]||it.vidrio)
+    }))
+  },'*');
+  const btn=document.getElementById('btnEnviarInterno');
+  btn.textContent='✅ Enviado!';
+  setTimeout(()=>{btn.textContent='→ Presupuesto interno';},2000);
+}
+if(window.parent!==window)document.getElementById('btnEnviarInterno').style.display='';
 
 function actualizarPreview(){
   const {a,h}=getMM();const aR=a||1500,hR=h||1100;
