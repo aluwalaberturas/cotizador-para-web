@@ -540,7 +540,7 @@ input[type=number]:focus{border-bottom-color:var(--black);}
       </div>
       <div style="margin-bottom:28px;">
         <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#808080;margin-bottom:8px;">Celular</div>
-        <input id="cli_celular" type="tel" style="width:100%;padding:12px 0;border:none;border-bottom:2px solid #e0e0e0;font-family:Inter,sans-serif;font-size:16px;font-weight:600;outline:none;" placeholder="1112345678">
+        <input id="cli_celular" type="tel" inputmode="numeric" oninput="this.value=this.value.replace(/\D/g,'')" style="width:100%;padding:12px 0;border:none;border-bottom:2px solid #e0e0e0;font-family:Inter,sans-serif;font-size:16px;font-weight:600;outline:none;" placeholder="1112345678">
       </div>
       <button onclick="confirmarPedido()" style="width:100%;padding:18px;background:#000;color:#fff;border:none;font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;">Generar presupuesto</button>
       <button onclick="document.getElementById('modalCliente').style.display='none'" style="width:100%;padding:14px;background:transparent;color:#808080;border:2px solid #e0e0e0;font-family:Inter,sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:8px;">Cancelar</button>
@@ -1368,7 +1368,10 @@ async function confirmarPedido(){
   const apellido=document.getElementById("cli_apellido").value.trim();
   const email=document.getElementById("cli_email").value.trim();
   const celular=document.getElementById("cli_celular").value.trim();
-  if(!nombre||!apellido||!email||!celular){alert("Completá todos los campos");return;}
+  const celularNums=celular.replace(/\D/g,'');
+  if(!nombre||!apellido||!email||!celular){alert("⚠️ Completá todos los campos antes de continuar.");return;}
+  if(celularNums.length<10){alert("⚠️ El celular debe tener al menos 10 números.");return;}
+  if(!email.includes('@')){alert("⚠️ El mail debe tener un @.");return;}
 
   const btnConfirmar=document.querySelector("#modalCliente button[onclick='confirmarPedido()']");
   const textoOriginal=btnConfirmar?btnConfirmar.textContent:"";
