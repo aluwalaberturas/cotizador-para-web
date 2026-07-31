@@ -1140,8 +1140,19 @@ function _setLinea(id,val){const c=_getCard(id);if(!c)return;c.linea=val;if(val=
 function _setTipo(id,val){const c=_getCard(id);if(!c)return;c.tipo=val;_rebuildCard(id);}
 function _setColor(id,val){const c=_getCard(id);if(!c)return;c.color=val;_rebuildCard(id);}
 function _setVidrio(id,val){const c=_getCard(id);if(!c)return;c.vidrio=val;_rebuildCard(id);}
-function _setAncho(id,val){const c=_getCard(id);if(!c)return;c.ancho=parseInt(val)||null;_updateSVGOnly(id);}
-function _setAlto(id,val){const c=_getCard(id);if(!c)return;c.alto=parseInt(val)||null;_updateSVGOnly(id);}
+function _setAncho(id,val){
+  const c=_getCard(id);if(!c)return;
+  let v=parseInt(val)||null;
+  if(v&&v>3500){v=3500;const el=document.querySelector(`[data-card-id="${id}"] input[oninput*="_setAncho"]`);if(el)el.value=3500;}
+  c.ancho=v;_updateSVGOnly(id);
+}
+function _setAlto(id,val){
+  const c=_getCard(id);if(!c)return;
+  const maxH=c.linea==="a30"?2500:2300;
+  let v=parseInt(val)||null;
+  if(v&&v>maxH){v=maxH;const el=document.querySelector(`[data-card-id="${id}"] input[oninput*="_setAlto"]`);if(el)el.value=maxH;}
+  c.alto=v;_updateSVGOnly(id);
+}
 function _setQty(id,delta){const c=_getCard(id);if(!c)return;c.cantidad=Math.max(1,c.cantidad+delta);const el=document.getElementById("qty_"+id);if(el)el.textContent=c.cantidad;}
 function _setOpc(id,opc,checked){const c=_getCard(id);if(!c)return;if(checked)c.opc.add(opc);else c.opc.delete(opc);}
 
