@@ -1039,8 +1039,8 @@ function _buildCardHTML(card,num){
     ${_cardSLBL("Vidrio")}<div class="vidrio-pills" style="margin-bottom:22px;">${vidrioPills}</div>
     ${_cardSLBL("Medidas")}
     <div class="cf-row" style="margin-bottom:22px;">
-      <div class="cf-field"><div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;">Ancho (mm)</div><input type="number" min="300" max="5000" placeholder="ej: 1200" value="${card.ancho||""}" oninput="_setAncho(${card.id},this.value)"></div>
-      <div class="cf-field"><div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;">Alto (mm)</div><input type="number" min="300" max="3000" placeholder="ej: 1000" value="${card.alto||""}" oninput="_setAlto(${card.id},this.value)"></div>
+      <div class="cf-field"><div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;">Ancho (mm)</div><input type="number" min="300" max="3500" placeholder="ej: 1200" value="${card.ancho||""}" oninput="_setAncho(${card.id},this.value)"></div>
+      <div class="cf-field"><div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;">Alto (mm)</div><input type="number" min="300" max="${card.linea==="a30"?2500:2300}" placeholder="ej: 1000" value="${card.alto||""}" oninput="_setAlto(${card.id},this.value)"></div>
     </div>
     ${_cardSLBL("Cantidad")}<div class="qty-ctrl" style="margin-bottom:22px;"><button onclick="_setQty(${card.id},-1)">−</button><span class="qty-val" id="qty_${card.id}">${card.cantidad}</span><button onclick="_setQty(${card.id},+1)">+</button></div>
     ${_cardSLBL("Extras")}<div class="extras-grid" style="margin-bottom:22px;">${extrasHTML}</div>
@@ -1056,14 +1056,14 @@ function _buildCardHTML(card,num){
 
 function _buildSVG(card){
   const a=card.ancho||1500,h=card.alto||1100;
-  // Canvas 260x240, dejar margen para cotas
   const VW=260,VH=240,MX=30,MY=24;
   const aw=VW-MX-14,ah=VH-MY-14;
   const r=Math.min(aw/a,ah/h);
   const w=a*r,hh=h*r;
   const x=MX+(aw-w)/2,y=MY+(ah-hh)/2;
-  const b=6; // grosor marco
-  const fc="#888"; // color marco (gris neutro técnico, independiente del color real)
+  const b=6;
+  const fcMap={blanco:"#d8d8d8",negro:"#2a2a2a",anodizado:"#a0a8b0",similmadera:"#8B5E3C"};
+  const fc=fcMap[card.color]||"#d8d8d8";
   const glass="#e8f4fb";
   const dim="#444"; // color cotas
   const hasA=card.ancho, hasH=card.alto;
