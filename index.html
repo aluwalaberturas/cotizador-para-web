@@ -97,155 +97,61 @@ header{
 }
 .sec-title::after{content:'';flex:1;height:1px;background:var(--gray-200);}
 
-/* PASO 1 — LINEAS */
-.linea-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--black);}
-.linea-card{
-  background:var(--white);padding:40px 36px;
-  cursor:pointer;transition:background .15s;
-  position:relative;overflow:hidden;
-}
-.linea-card:hover:not(.disabled){background:var(--gray-50);}
-.linea-card.selected{background:var(--black);}
-.linea-card.disabled{opacity:.35;cursor:not-allowed;}
-.linea-nom{
-  font-size:48px;font-weight:900;letter-spacing:-2px;text-transform:uppercase;
-  color:var(--black);line-height:1;transition:color .15s;
-}
-.linea-card.selected .linea-nom{color:var(--white);}
-.linea-sep{width:32px;height:2px;background:var(--black);margin:12px 0;transition:background .15s;}
-.linea-card.selected .linea-sep{background:var(--white);}
-.linea-desc{font-size:12px;color:var(--gray-500);font-weight:400;letter-spacing:0.3px;transition:color .15s;}
-.linea-card.selected .linea-desc{color:var(--gray-300);}
-.linea-pronto{
-  display:inline-block;margin-top:10px;
-  font-size:9px;letter-spacing:2.5px;text-transform:uppercase;
-  border:1px solid var(--gray-200);color:var(--gray-300);padding:4px 10px;font-weight:600;
-}
-
-/* PASO 2 — TIPOS */
-.tipo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--black);}
-.tipo-card{
-  background:var(--white);padding:24px 16px;text-align:center;
-  cursor:pointer;transition:background .15s;
-}
-.tipo-card:hover{background:var(--gray-50);}
-.tipo-card.selected{background:var(--black);}
-.tipo-icon{font-size:28px;margin-bottom:10px;display:block;}
-.tipo-lbl{
-  font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:var(--black);transition:color .15s;text-align:center;
-}
-.tipo-card.selected .tipo-lbl{color:var(--white);}
-
-/* PASO 3 — CONFIG */
-.config-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--black);}
-.config-left,.config-right{background:var(--white);padding:36px;}
-.config-right{background:var(--gray-50);}
-
-.form-group{margin-bottom:24px;}
-.form-lbl{
-  display:block;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
-  color:var(--gray-500);margin-bottom:10px;
-}
-input[type=number]{
-  width:100%;padding:14px 16px;
-  border:none;border-bottom:2px solid var(--gray-200);
-  background:transparent;
-  font-family:'Inter',sans-serif;font-size:18px;font-weight:600;
-  color:var(--black);outline:none;transition:border-color .15s;
-  -moz-appearance:textfield;
-}
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
-input[type=number]:focus{border-bottom-color:var(--black);}
-.input-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.input-unit{font-size:10px;color:var(--gray-300);margin-top:6px;letter-spacing:1px;text-transform:uppercase;}
-
-.color-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--black);}
-.color-card{
-  background:var(--white);padding:14px 10px;text-align:center;
-  cursor:pointer;transition:background .15s;
-}
-.color-card:hover{background:var(--gray-50);}
-.color-card.selected{background:var(--black);}
-.cdot{width:20px;height:20px;border-radius:50%;margin:0 auto 7px;border:1px solid var(--gray-200);}
-.cname{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--black);transition:color .15s;}
-.color-card.selected .cname{color:var(--white);}
-.color-card.selected .cdot{border-color:#444;}
-
-.vidrio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--black);}
-.vidrio-card{
-  background:var(--white);padding:14px 10px;text-align:center;
-  cursor:pointer;transition:background .15s;
-}
-.vidrio-card:hover{background:var(--gray-50);}
-.vidrio-card.selected{background:var(--black);}
-.vicon{font-size:18px;margin-bottom:6px;display:block;}
-.vname{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--black);line-height:1.4;transition:color .15s;}
-.vidrio-card.selected .vname{color:var(--white);}
-
-/* OPCIONALES */
-.opc-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
-.opc-lbl{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray-500);}
-.opc-tag{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--gray-200);color:var(--gray-300);padding:3px 8px;}
-.opc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--black);}
-.opc-card{
-  background:var(--white);padding:14px 10px;text-align:center;
-  cursor:pointer;transition:background .15s;
-}
-.opc-card:hover{background:var(--gray-50);}
-.opc-card.selected{background:var(--gray-100);box-shadow:inset 0 0 0 2px var(--black);}
-.opc-icon{font-size:18px;margin-bottom:6px;display:block;}
-.opc-name{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--black);line-height:1.4;transition:color .15s;}
-.opc-card.selected .opc-name{color:var(--black);}
-
-.opc-cierre-wrap{display:none;margin-top:2px;}
-.opc-cierre-wrap.show{display:block;}
-.opc-cierre-card{
-  background:var(--white);padding:14px 10px;text-align:center;
-  cursor:pointer;transition:background .15s;border:2px solid var(--gray-200);
-}
-.opc-cierre-card:hover{background:var(--gray-50);}
-.opc-cierre-card.selected{background:var(--gray-100);border-color:var(--black);box-shadow:inset 0 0 0 2px var(--black);}
-
-/* PREVIEW */
-.preview-lbl{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray-300);margin-bottom:8px;}
-.tipo-badge{
-  display:inline-block;
-  font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-  background:var(--black);color:var(--white);padding:5px 12px;
-  margin-bottom:20px;
-}
+/* CARDS DE ABERTURAS */
+.cards-wrap{display:flex;flex-direction:column;gap:2px;}
+.aber-card{animation:fadeUp .18s ease;}
+.aber-header{background:var(--black);color:var(--white);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;}
+.aber-num{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;}
+.aber-close{background:none;border:1px solid rgba(255,255,255,.3);color:var(--white);width:28px;height:28px;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;}
+.aber-close:hover{background:rgba(255,255,255,.1);}
+.aber-body{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--black);}
+.aber-left{background:var(--white);padding:28px 32px;}
+.aber-right{background:var(--gray-50);padding:28px 32px;display:flex;flex-direction:column;align-items:center;}
+.cf-group{margin-bottom:20px;}
+.cf-label{display:block;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray-500);margin-bottom:10px;}
+.linea-tabs{display:flex;gap:2px;background:var(--black);}
+.ltab{flex:1;padding:10px 8px;background:var(--white);border:none;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background .15s;color:var(--black);}
+.ltab:hover{background:var(--gray-50);}.ltab.active{background:var(--black);color:var(--white);}
+.tipo-chips{display:flex;flex-wrap:wrap;gap:2px;background:var(--black);}
+.tchip{padding:8px 14px;background:var(--white);border:none;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background .15s;color:var(--black);}
+.tchip:hover{background:var(--gray-50);}.tchip.active{background:var(--black);color:var(--white);}
+.color-dots{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--black);}
+.cdot-btn{background:var(--white);border:none;padding:10px 6px;text-align:center;cursor:pointer;transition:background .15s;}
+.cdot-btn:hover{background:var(--gray-50);}.cdot-btn.active{background:var(--black);}
+.cdot{width:18px;height:18px;border-radius:50%;margin:0 auto 5px;border:1px solid var(--gray-200);}
+.cname{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--black);transition:color .15s;}
+.cdot-btn.active .cname{color:var(--white);}.cdot-btn.active .cdot{border-color:#444;}
+.vidrio-pills{display:flex;gap:2px;background:var(--black);}
+.vpill{flex:1;padding:10px 8px;background:var(--white);border:none;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .15s;color:var(--black);text-align:center;}
+.vpill:hover{background:var(--gray-50);}.vpill.active{background:var(--black);color:var(--white);}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--black);margin-bottom:20px;}
+.cf-field{background:var(--white);padding:12px 16px;}
+.cf-field .cf-label{margin-bottom:6px;}
+.cf-field input[type=number]{width:100%;padding:8px 0;border:none;border-bottom:2px solid var(--gray-200);background:transparent;font-family:'Inter',sans-serif;font-size:22px;font-weight:700;color:var(--black);outline:none;-moz-appearance:textfield;}
+.cf-field input[type=number]::-webkit-outer-spin-button,.cf-field input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
+.cf-field input[type=number]:focus{border-bottom-color:var(--black);}
+.qty-ctrl{display:inline-flex;gap:2px;background:var(--black);}
+.qty-ctrl button{width:40px;height:40px;background:var(--white);border:none;font-size:20px;font-weight:300;cursor:pointer;transition:background .15s;color:var(--black);font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;}
+.qty-ctrl button:hover{background:var(--gray-50);}
+.qty-val{min-width:48px;height:40px;background:var(--black);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;font-family:'Inter',sans-serif;}
+.extras-grid{display:flex;gap:2px;flex-wrap:wrap;background:var(--black);margin-bottom:2px;}
+.extra-item{flex:1;min-width:120px;background:var(--white);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.extra-item label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-500);}
+.extra-item select{border:none;background:transparent;font-size:12px;font-weight:600;color:var(--black);outline:none;cursor:pointer;font-family:'Inter',sans-serif;}
+.extra-check{background:var(--white);padding:10px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:2px;}
+.extra-check input{cursor:pointer;accent-color:var(--black);}
+.extra-check span{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-500);}
+.btn-agregar{width:100%;margin-top:20px;padding:16px;background:var(--black);color:var(--white);border:none;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:background .15s;}
+.btn-agregar:hover{background:#222;}
+.tipo-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;background:var(--black);color:var(--white);padding:4px 12px;margin-bottom:16px;align-self:flex-start;}
 .win-wrap{display:flex;align-items:center;justify-content:center;padding:16px 0;}
 .dims-lbl{font-size:11px;color:var(--gray-300);letter-spacing:2px;text-transform:uppercase;text-align:center;margin-top:8px;}
-
-/* BOTONES */
-.btn-primary{
-  width:100%;padding:18px;background:var(--black);color:var(--white);
-  border:none;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;
-  letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:background .15s;
-  margin-top:16px;
-}
-.btn-primary:hover{background:#222;}
-.btn-ghost{
-  width:100%;padding:16px;background:transparent;color:var(--gray-500);
-  border:2px solid var(--gray-200);font-family:'Inter',sans-serif;
-  font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-  cursor:pointer;transition:all .15s;margin-top:8px;
-}
-.btn-ghost:hover{border-color:var(--black);color:var(--black);}
-
-/* BREADCRUMB */
-.bc{
-  display:flex;align-items:center;gap:10px;margin-bottom:24px;
-  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
-  color:var(--gray-300);flex-wrap:wrap;
-}
-.bc-link{cursor:pointer;transition:color .15s;} .bc-link:hover{color:var(--black);}
-.bc-sep{color:var(--gray-200);}
-.bc-cur{color:var(--black);}
-.bc-badge{background:var(--black);color:var(--white);padding:3px 10px;font-size:9px;letter-spacing:2px;cursor:pointer;}
-.bc-badge:hover{background:#333;}
+.btn-add-card{width:100%;padding:20px;background:transparent;color:var(--gray-400);border:2px dashed var(--gray-200);font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .15s;margin-top:2px;}
+.btn-add-card:hover{border-color:var(--black);color:var(--black);background:var(--gray-50);}
+.empty-state{text-align:center;padding:60px 40px;}
+.empty-icon{font-size:48px;opacity:.2;margin-bottom:16px;}
+.empty-title{font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray-400);margin-bottom:8px;}
+.empty-sub{font-size:12px;color:var(--gray-300);}
 
 /* CARRITO */
 .carrito-wrap{display:none;margin-top:2px;}
@@ -380,55 +286,23 @@ input[type=number]:focus{border-bottom-color:var(--black);}
   <div class="hero-inner">
     <div class="hero-line">Línea Aluar &mdash; Módena / A30</div>
     <div class="hero-title">Cotizador de<br><em>Aberturas</em></div>
-    <div class="hero-sub">Seleccioná línea, tipo y medidas. Precio estimado sin IVA en segundos.</div>
-  </div>
-</div>
-
-<div class="stepper-wrap">
-  <div class="stepper">
-    <div class="stp active" id="stp1"><span class="snum">1</span>Línea</div>
-    <div class="stp" id="stp2"><span class="snum">2</span>Abertura</div>
-    <div class="stp" id="stp3"><span class="snum">3</span>Configurar</div>
+    <div class="hero-sub">Agregá las aberturas que necesitás y generá tu presupuesto.</div>
   </div>
 </div>
 
 <div class="main">
 
-  <!-- PASO 1 -->
-  <div class="paso activo" id="paso1">
-    <div class="sec-title">Elegí la línea de aluminio</div>
-    <div class="linea-grid">
-      <div class="linea-card" data-linea="modena" onclick="selectLinea(this)">
-        <div class="linea-nom">Módena</div>
-        <div class="linea-sep"></div>
-        <div class="linea-desc">Sistema Aluar Módena</div>
-      </div>
-      <div class="linea-card" data-linea="a30" onclick="selectLinea(this)">
-        <div class="linea-nom">A·30</div>
-        <div class="linea-sep"></div>
-        <div class="linea-desc">Sistema Aluar A30</div>
-      </div>
-      <div class="linea-card" data-linea="modena-recuperado" onclick="selectLinea(this)">
-        <div class="linea-nom">Módena</div>
-        <div class="linea-sep"></div>
-        <div class="linea-desc">Aluminio Recuperado</div>
-      </div>
+  <div id="cardsWrap" class="cards-wrap">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🪟</div>
+      <div class="empty-title">Sin aberturas todavía</div>
+      <div class="empty-sub">Hacé click en el botón de abajo para comenzar</div>
     </div>
   </div>
+  <button class="btn-add-card" onclick="addCard()">+ Agregar abertura</button>
 
-  <!-- PASO 2 -->
-  <div class="paso" id="paso2">
-    <div class="bc">
-      <span class="bc-link" onclick="irPaso(1)">← Volver</span>
-      <span class="bc-sep">/</span>
-      <span class="bc-badge" id="lineaBadge" onclick="irPaso(1)">Módena</span>
-    </div>
-    <div class="sec-title">Tipo de abertura</div>
-    <div class="tipo-grid" id="tipoGrid"></div>
-  </div>
-
-  <!-- PASO 3 -->
-  <div class="paso" id="paso3">
+  <!-- PLACEHOLDER para carrito oculto (usado por PDF) -->
+  <div id="paso3" style="display:none">
     <div class="bc">
       <span class="bc-link" onclick="irPaso(1)">Línea</span>
       <span class="bc-sep">/</span>
@@ -1055,74 +929,194 @@ const TIMG={
 };
 const TIPOS=[{id:"pano",icon:"⬜",label:"Paño Fijo"},{id:"corrediza",icon:"🪟",label:"Corrediza 2H"},{id:"corrediza3",icon:"🪟",label:"Corrediza 3H"},{id:"banderola",icon:"🔼",label:"Banderola"},{id:"brazo",icon:"🔧",label:"Brazo Empuje"},{id:"oscilobatiente",icon:"↩️",label:"Oscilobatiente"},{id:"raja",icon:"📐",label:"Raja"}];
 const TLBL={pano:"Paño Fijo",corrediza:"Corrediza 2H",corrediza3:"Corrediza 3H",banderola:"Banderola",brazo:"Brazo Empuje",oscilobatiente:"Oscilobatiente",raja:"Raja"};
+// Globals used by calc() — set temporarily in _agregarCard before calling calc()
 let lineaSel="",tipoSel="",colorSel="blanco",vidrioSel="comun",carrito=[];
-
-function irPaso(n){
-  document.querySelectorAll(".paso").forEach(p=>p.classList.remove("activo"));
-  document.getElementById("paso"+n).classList.add("activo");
-  for(let i=1;i<=3;i++){const s=document.getElementById("stp"+i);s.classList.remove("active","done");s.onclick=null;if(i<n){s.classList.add("done");const ii=i;s.onclick=()=>irPaso(ii);}else if(i===n)s.classList.add("active");}
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-function selectLinea(el){
-  if(el.classList.contains("disabled"))return;
-  lineaSel=el.dataset.linea;
-  document.getElementById("lineaBadge").textContent=lineaSel==="modena"?"Módena":lineaSel==="modena-recuperado"?"Módena Rec.":"A·30";
-  const tiposDisp=lineaSel==="a30"?["pano","banderola","brazo","oscilobatiente","raja","corrediza","corrediza3"]:TIPOS.map(t=>t.id);
-  document.getElementById("tipoGrid").innerHTML=TIPOS.map(t=>{
-    const dis=lineaSel==="a30"&&!tiposDisp.includes(t.id);
-    const col=colorSel||"blanco";
-    const imgSrc=(typeof TIMG!=="undefined"&&TIMG[t.id])?(TIMG[t.id][col]||TIMG[t.id]['anodizado']||TIMG[t.id]['blanco']||""):"";
-
-    const iconHtml=imgSrc?`<img src="${imgSrc}" style="width:64px;height:48px;object-fit:contain;display:block;margin:0 auto 8px;">`:`<span class="tipo-icon">${t.icon}</span>`;
-    return`<div class="tipo-card${dis?" disabled":""}" data-tipo="${t.id}" ${dis?"":"onclick=\"selectTipo(this)\""} style="${dis?"opacity:.3;cursor:not-allowed;":""}"><div style="min-height:56px;display:flex;align-items:center;justify-content:center;">${iconHtml}</div><div class="tipo-lbl">${t.label}${dis?" 🔜":""}</div></div>`;
-  }).join("")+(()=>{const cols=4,ghosts=(cols-TIPOS.length%cols)%cols;return'<div class="tipo-ghost" style="background:var(--white)"></div>'.repeat(ghosts);})();
-  actualizarColores();
-  setTimeout(()=>irPaso(2),100);
-}
-function selectTipo(el){
-  document.querySelectorAll("#tipoGrid .tipo-card").forEach(e=>e.classList.remove("selected"));
-  el.classList.add("selected");tipoSel=el.dataset.tipo;
-  document.getElementById("bc2").textContent=TLBL[tipoSel];
-  setTimeout(()=>{irPaso(3);actualizarPreview();actualizarOpcionales();},100);
-}
-function selectColor(el){document.querySelectorAll(".color-card").forEach(e=>e.classList.remove("selected"));el.classList.add("selected");colorSel=el.dataset.color;
-  // Refresh tipo icons with new color
-  document.querySelectorAll("#tipoGrid .tipo-card img").forEach(img=>{
-    const tipo=img.closest(".tipo-card").dataset.tipo;
-    if(TIMG[tipo])img.src=TIMG[tipo][colorSel]||TIMG[tipo]['anodizado']||TIMG[tipo]['blanco']||img.src;
-  });
-  actualizarPreview();}
-function selectVidrio(el){document.querySelectorAll(".vidrio-card").forEach(e=>e.classList.remove("selected"));el.classList.add("selected");vidrioSel=el.dataset.vidrio;}
 let opcionalesSel=new Set();
-function actualizarColores(){
-  const noDisp=lineaSel==="modena-recuperado"?["anodizado","similmadera"]:[];
-  document.querySelectorAll(".color-card").forEach(el=>{
-    const c=el.dataset.color;
-    const ocultar=noDisp.includes(c);
-    el.style.display=ocultar?"none":"";
-    if(ocultar&&el.classList.contains("selected")){
-      el.classList.remove("selected");
-      colorSel="blanco";
-      document.querySelector('.color-card[data-color="blanco"]').classList.add("selected");
-    }
+// Stubs for legacy references in hidden paso3 HTML + PP panel
+function irPaso(){}
+function selectLinea(){}
+function selectTipo(){}
+function selectColor(){}
+function selectVidrio(){}
+function toggleOpcional(){}
+function actualizarColores(){}
+function actualizarOpcionales(){}
+
+// ── CARD SYSTEM ────────────────────────────────────────────
+let _cards=[], _cardN=0;
+const COLORES_CARD=[
+  {val:"blanco",lbl:"Blanco",css:"#e8e8e8"},
+  {val:"negro",lbl:"Negro",css:"#111"},
+  {val:"anodizado",lbl:"Anodizado",css:"linear-gradient(135deg,#999,#ccc)"},
+  {val:"similmadera",lbl:"Similmadera",css:"linear-gradient(135deg,#8B5E3C,#C49A6C)"}
+];
+
+function addCard(){
+  const id=++_cardN;
+  _cards.push({id,linea:"modena",tipo:"corrediza",color:"blanco",vidrio:"comun",opc:new Set(),ancho:null,alto:null,cantidad:1});
+  _renderCards();
+  requestAnimationFrame(()=>{
+    const el=document.querySelector(`[data-card-id="${id}"]`);
+    if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
   });
 }
-function toggleOpcional(el){el.classList.toggle("selected");const k=el.dataset.opc;if(opcionalesSel.has(k))opcionalesSel.delete(k);else opcionalesSel.add(k);}
-function actualizarOpcionales(){
-  const mosq=document.querySelector(".opc-card[data-opc='mosquitero']");
-  const bipWrap=document.getElementById("opcBipuntoWrap");
-  const bipCard=document.querySelector(".opc-cierre-card[data-opc='bipunto']");
-  const grid=document.querySelector(".opc-grid");
-  if(!mosq||!grid)return;
-  const ocultarMosq=tipoSel==="pano"||tipoSel==="brazo";
-  const mostrarBip=tipoSel==="corrediza";
-  mosq.style.display=ocultarMosq?"none":"";
-  if(bipWrap)bipWrap.classList.toggle("show",mostrarBip);
-  if(ocultarMosq){mosq.classList.remove("selected");opcionalesSel.delete("mosquitero");}
-  if(!mostrarBip&&bipCard){bipCard.classList.remove("selected");opcionalesSel.delete("bipunto");}
-  const visibles=[...grid.querySelectorAll(".opc-card")].filter(e=>e.style.display!=="none").length;
-  grid.style.gridTemplateColumns=visibles<=2?"repeat(2,1fr)":"repeat(3,1fr)";
+
+function _getCard(id){return _cards.find(c=>c.id===id);}
+
+function _removeCard(id){
+  _cards=_cards.filter(c=>c.id!==id);
+  _renderCards();
 }
+
+function _renderCards(){
+  const wrap=document.getElementById("cardsWrap");
+  const es=document.getElementById("emptyState");
+  if(_cards.length===0){es.style.display="";return;}
+  es.style.display="none";
+  wrap.querySelectorAll(".aber-card").forEach(e=>{
+    if(!_cards.find(c=>c.id===parseInt(e.dataset.cardId)))e.remove();
+  });
+  _cards.forEach((card,idx)=>{
+    let cardEl=wrap.querySelector(`[data-card-id="${card.id}"]`);
+    if(!cardEl){
+      cardEl=document.createElement("div");
+      cardEl.className="aber-card";
+      cardEl.dataset.cardId=card.id;
+      wrap.appendChild(cardEl);
+    }
+    cardEl.innerHTML=_buildCardHTML(card,idx+1);
+  });
+}
+
+function _cardSLBL(txt){
+  return`<div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:10px;">${txt}</div>`;
+}
+
+function _buildCardHTML(card,num){
+  const lineas=[{val:"modena",lbl:"Módena"},{val:"a30",lbl:"A·30"},{val:"modena-recuperado",lbl:"Recuperado"}];
+  const lineaTabs=lineas.map(l=>`<button class="ltab${card.linea===l.val?" active":""}" onclick="_setLinea(${card.id},'${l.val}')">${l.lbl}</button>`).join("");
+  const tiposDisp=card.linea==="a30"?["pano","banderola","brazo","oscilobatiente","raja","corrediza","corrediza3"]:TIPOS.map(t=>t.id);
+  const tipoChips=TIPOS.filter(t=>tiposDisp.includes(t.id)).map(t=>{
+    const imgSrc=(typeof TIMG!=="undefined"&&TIMG[t.id])?(TIMG[t.id][card.color]||TIMG[t.id].blanco||""):"";
+    const icon=imgSrc?`<img src="${imgSrc}" style="height:32px;object-fit:contain;display:block;margin:0 auto 3px;">`:`<span style="font-size:18px;display:block;text-align:center;margin-bottom:3px;">${t.icon}</span>`;
+    return`<button class="tchip${card.tipo===t.id?" active":""}" onclick="_setTipo(${card.id},'${t.id}')" style="min-width:80px;text-align:center;padding:8px 10px;">${icon}<span style="font-size:9px;">${t.label}</span></button>`;
+  }).join("");
+  const colFilt=COLORES_CARD.filter(c=>card.linea==="modena-recuperado"?c.val==="blanco"||c.val==="negro":true);
+  const colorDots=colFilt.map(c=>`<button class="cdot-btn${card.color===c.val?" active":""}" onclick="_setColor(${card.id},'${c.val}')" title="${c.lbl}"><span class="cdot" style="background:${c.css};width:22px;height:22px;display:inline-block;border-radius:50%;margin-bottom:4px;border:1px solid rgba(0,0,0,.15);"></span><span class="cname" style="display:block;font-size:8px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:inherit;">${c.lbl}</span></button>`).join("");
+  const vidrioPills=[{val:"comun",lbl:"Común 4mm"},{val:"33",lbl:"Laminado 3+3"},{val:"dvh",lbl:"DVH 4+9+4"}].map(v=>`<button class="vpill${card.vidrio===v.val?" active":""}" onclick="_setVidrio(${card.id},'${v.val}')">${v.lbl}</button>`).join("");
+  const hayMosq=card.tipo!=="pano"&&card.tipo!=="brazo";
+  const hayBip=card.tipo==="corrediza"||card.tipo==="corrediza3";
+  const extrasHTML=[
+    hayMosq?`<label class="extra-check"><input type="checkbox"${card.opc.has("mosquitero")?" checked":""} onchange="_setOpc(${card.id},'mosquitero',this.checked)"><span>Mosquitero</span></label>`:"",
+    `<label class="extra-check"><input type="checkbox"${card.opc.has("contramarco")?" checked":""} onchange="_setOpc(${card.id},'contramarco',this.checked)"><span>Contramarco</span></label>`,
+    `<label class="extra-check"><input type="checkbox"${card.opc.has("premarco")?" checked":""} onchange="_setOpc(${card.id},'premarco',this.checked)"><span>Premarco</span></label>`,
+    hayBip?`<label class="extra-check"><input type="checkbox"${card.opc.has("bipunto")?" checked":""} onchange="_setOpc(${card.id},'bipunto',this.checked)"><span>Cierre bipunto</span></label>`:""
+  ].filter(Boolean).join("");
+  return`
+<div class="aber-header">
+  <span class="aber-num">ABERTURA ${num}</span>
+  <button onclick="_removeCard(${card.id})" style="background:none;border:none;color:var(--white);cursor:pointer;font-size:16px;opacity:.7;padding:4px 8px;">✕</button>
+</div>
+<div class="aber-body">
+  <div class="aber-left">
+    ${_cardSLBL("Línea")}<div class="linea-tabs" style="margin-bottom:22px;">${lineaTabs}</div>
+    ${_cardSLBL("Tipo")}<div class="tipo-chips" style="margin-bottom:22px;">${tipoChips}</div>
+    ${_cardSLBL("Color")}<div class="color-dots" style="margin-bottom:22px;">${colorDots}</div>
+    ${_cardSLBL("Vidrio")}<div class="vidrio-pills" style="margin-bottom:22px;">${vidrioPills}</div>
+    ${_cardSLBL("Medidas")}
+    <div class="cf-row" style="margin-bottom:22px;">
+      <div class="cf-field"><div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;">Ancho (mm)</div><input type="number" min="300" max="5000" placeholder="ej: 1200" value="${card.ancho||""}" oninput="_setAncho(${card.id},this.value)"></div>
+      <div class="cf-field"><div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;">Alto (mm)</div><input type="number" min="300" max="3000" placeholder="ej: 1000" value="${card.alto||""}" oninput="_setAlto(${card.id},this.value)"></div>
+    </div>
+    ${_cardSLBL("Cantidad")}<div class="qty-ctrl" style="margin-bottom:22px;"><button onclick="_setQty(${card.id},-1)">−</button><span class="qty-val" id="qty_${card.id}">${card.cantidad}</span><button onclick="_setQty(${card.id},+1)">+</button></div>
+    ${_cardSLBL("Extras")}<div class="extras-grid" style="margin-bottom:22px;">${extrasHTML}</div>
+    <button class="btn-agregar" onclick="_agregarCard(${card.id})">Agregar al presupuesto →</button>
+  </div>
+  <div class="aber-right">
+    <div class="tipo-badge">${TLBL[card.tipo]||card.tipo}</div>
+    <div class="win-wrap" id="winWrap_${card.id}">${_buildSVG(card)}</div>
+    <div class="dims-lbl" id="dims_${card.id}">${card.ancho?card.ancho+" × "+(card.alto||"—")+" mm":"ingresá las medidas"}</div>
+  </div>
+</div>`;
+}
+
+function _buildSVG(card){
+  const a=card.ancho||1500,h=card.alto||1100;
+  const r=Math.min(200/a,180/h),w=a*r,hh=h*r;
+  const x=(210-w)/2,y=(200-hh)/2,b=7;
+  const stroke=CSVG[card.color]||"#aaa";
+  let inner="";
+  if(card.tipo==="corrediza"){
+    const mid=x+w/2;
+    inner=`<rect x="${x+b}" y="${y+b}" width="${w/2-b-1}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>
+    <rect x="${mid+2}" y="${y+b}" width="${w/2-b-1}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>
+    <line x1="${mid}" y1="${y+b}" x2="${mid}" y2="${y+hh-b}" stroke="${stroke}" stroke-width="2"/>
+    <text x="${x+w*.25}" y="${y+hh/2+6}" text-anchor="middle" font-size="16" fill="${stroke}">→</text>
+    <text x="${x+w*.75}" y="${y+hh/2+6}" text-anchor="middle" font-size="16" fill="${stroke}">←</text>`;
+  } else if(card.tipo==="corrediza3"){
+    const t1=x+w/3,t2=x+2*w/3;
+    inner=`<rect x="${x+b}" y="${y+b}" width="${w-b*2}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>
+    <line x1="${t1}" y1="${y+b}" x2="${t1}" y2="${y+hh-b}" stroke="${stroke}" stroke-width="2"/>
+    <line x1="${t2}" y1="${y+b}" x2="${t2}" y2="${y+hh-b}" stroke="${stroke}" stroke-width="2"/>
+    <text x="${x+w*.17}" y="${y+hh/2+6}" text-anchor="middle" font-size="14" fill="${stroke}">→</text>
+    <text x="${x+w*.83}" y="${y+hh/2+6}" text-anchor="middle" font-size="14" fill="${stroke}">←</text>`;
+  } else if(card.tipo==="banderola"||card.tipo==="brazo"){
+    inner=`<rect x="${x+b}" y="${y+b}" width="${w-b*2}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>
+    <text x="${x+w/2}" y="${y+hh*.65}" text-anchor="middle" font-size="24" fill="${stroke}">↗</text>`;
+  } else if(card.tipo==="oscilobatiente"){
+    inner=`<rect x="${x+b}" y="${y+b}" width="${w-b*2}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>
+    <line x1="${x+b}" y1="${y+hh-b}" x2="${x+w/2}" y2="${y+hh/2}" stroke="#888" stroke-width="1.5"/>
+    <text x="${x+w*.65}" y="${y+hh*.45}" text-anchor="middle" font-size="18" fill="${stroke}">↩</text>`;
+  } else if(card.tipo==="raja"){
+    inner=`<rect x="${x+b}" y="${y+b}" width="${w-b*2}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>
+    <line x1="${x}" y1="${y+hh/2}" x2="${x+w}" y2="${y+hh/2}" stroke="${stroke}" stroke-width="2"/>`;
+  } else {
+    inner=`<rect x="${x+b}" y="${y+b}" width="${w-b*2}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>`;
+  }
+  return`<svg viewBox="0 0 210 200" width="210" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect x="${x}" y="${y}" width="${w}" height="${hh}" fill="none" stroke="${stroke}" stroke-width="${b}"/>
+  ${inner}
+</svg>`;
+}
+
+function _setLinea(id,val){const c=_getCard(id);if(!c)return;c.linea=val;if(val==="modena-recuperado"&&(c.color==="anodizado"||c.color==="similmadera"))c.color="blanco";_rebuildCard(id);}
+function _setTipo(id,val){const c=_getCard(id);if(!c)return;c.tipo=val;_rebuildCard(id);}
+function _setColor(id,val){const c=_getCard(id);if(!c)return;c.color=val;_rebuildCard(id);}
+function _setVidrio(id,val){const c=_getCard(id);if(!c)return;c.vidrio=val;_rebuildCard(id);}
+function _setAncho(id,val){const c=_getCard(id);if(!c)return;c.ancho=parseInt(val)||null;_updateSVGOnly(id);}
+function _setAlto(id,val){const c=_getCard(id);if(!c)return;c.alto=parseInt(val)||null;_updateSVGOnly(id);}
+function _setQty(id,delta){const c=_getCard(id);if(!c)return;c.cantidad=Math.max(1,c.cantidad+delta);const el=document.getElementById("qty_"+id);if(el)el.textContent=c.cantidad;}
+function _setOpc(id,opc,checked){const c=_getCard(id);if(!c)return;if(checked)c.opc.add(opc);else c.opc.delete(opc);}
+
+function _rebuildCard(id){
+  const c=_getCard(id);if(!c)return;
+  const wrap=document.getElementById("cardsWrap");
+  const cardEl=wrap.querySelector(`[data-card-id="${id}"]`);
+  if(!cardEl)return;
+  const idx=_cards.findIndex(c2=>c2.id===id);
+  cardEl.innerHTML=_buildCardHTML(c,idx+1);
+}
+
+function _updateSVGOnly(id){
+  const c=_getCard(id);if(!c)return;
+  const ww=document.getElementById("winWrap_"+id);
+  const dl=document.getElementById("dims_"+id);
+  if(ww)ww.innerHTML=_buildSVG(c);
+  if(dl)dl.textContent=c.ancho?c.ancho+" × "+(c.alto||"—")+" mm":"ingresá las medidas";
+}
+
+function _agregarCard(id){
+  const c=_getCard(id);if(!c)return;
+  if(!c.ancho||!c.alto||c.ancho<300||c.alto<300){alert("Medidas mínimas: 300mm en ancho y alto.");return;}
+  const prevL=lineaSel,prevT=tipoSel,prevC=colorSel,prevV=vidrioSel,prevO=opcionalesSel;
+  lineaSel=c.linea;tipoSel=c.tipo;colorSel=c.color;vidrioSel=c.vidrio;opcionalesSel=c.opc;
+  const pu=calc(c.ancho,c.alto);
+  lineaSel=prevL;tipoSel=prevT;colorSel=prevC;vidrioSel=prevV;opcionalesSel=prevO;
+  carrito.push({tipo:c.tipo,linea:c.linea,ancho:c.ancho,alto:c.alto,cantidad:c.cantidad,color:c.color,vidrio:c.vidrio,precioUnit:pu,precioTotal:pu*c.cantidad});
+  renderCarrito();
+  _removeCard(id);
+}
+// ── FIN CARD SYSTEM ─────────────────────────────────────────
 
 function rajaA30(a,h){
   const dvh=vidrioSel==="dvh";
@@ -1243,14 +1237,7 @@ function calc(a,h){
   if(tipoSel==="pano")return pano(a,h);if(tipoSel==="corrediza")return corrediza(a,h);if(tipoSel==="corrediza3")return corrediza3G(a,h);if(tipoSel==="banderola")return banderola(a,h);if(tipoSel==="brazo")return brazo(a,h);if(tipoSel==="oscilobatiente")return oscilo(a,h);if(tipoSel==="raja")return raja(a,h);return 0;
 }
 
-function agregarAlCarrito(){
-  const {a,h}=getMM();const q=parseInt(document.getElementById("cantidad").value)||1;
-  if(!a||!h||a<300||h<300){alert("Medidas mínimas: 30cm (300mm)");return;}
-  const pu=calc(a,h);
-  carrito.push({tipo:tipoSel,ancho:a,alto:h,cantidad:q,color:colorSel,vidrio:vidrioSel,precioUnit:pu,precioTotal:pu*q});
-  renderCarrito();
-  irPaso(2);
-}
+function agregarAlCarrito(){}
 function renderCarrito(){
   const g=document.getElementById("ventanasGrid");g.innerHTML="";
   carrito.forEach((it,i)=>{
@@ -1292,51 +1279,7 @@ function enviarAlInterno(){
 }
 if(window.parent!==window)document.getElementById('btnEnviarInterno').style.display='';
 
-function actualizarPreview(){
-  const {a,h}=getMM();const aR=a||1500,hR=h||1100;
-  // Si es corrediza, mostrar imagen real
-  const svgWrap=document.getElementById("winSvg");
-  const imgPreview=document.getElementById("imgPreview");
-  if(tipoSel==="corrediza3"){
-    svgWrap.style.display="none";
-    if(imgPreview){imgPreview.src=TIMG.corrediza3[colorSel]||"";imgPreview.style.display="block";}
-  } else if(tipoSel==="corrediza"){
-    svgWrap.style.display="none";
-    if(imgPreview){imgPreview.src=TIMG.corrediza[colorSel]||CIMG[colorSel]||"";imgPreview.style.display="block";}
-  } else if(tipoSel==="pano"){
-    svgWrap.style.display="none";
-    if(imgPreview){imgPreview.src=TIMG.pano[colorSel]||PIMG[colorSel]||"";imgPreview.style.display="block";}
-  } else if(tipoSel==="brazo"){
-    svgWrap.style.display="none";
-    if(imgPreview){imgPreview.src=TIMG.brazo[colorSel]||BIMG[colorSel]||"";imgPreview.style.display="block";}
-  } else if(tipoSel==="banderola"){
-    svgWrap.style.display="none";
-    if(imgPreview){imgPreview.src=TIMG.banderola[colorSel]||BANIMG[colorSel]||"";imgPreview.style.display="block";}
-  } else if(tipoSel==="raja"){
-    svgWrap.style.display="none";
-    if(imgPreview){imgPreview.src=TIMG.raja[colorSel]||RAJIMG[colorSel]||"";imgPreview.style.display="block";}
-  } else if(tipoSel==="oscilobatiente"){
-    svgWrap.style.display="none";
-    if(imgPreview){imgPreview.src=TIMG.oscilobatiente[colorSel]||OSCIMG[colorSel]||"";imgPreview.style.display="block";}
-  } else {
-    svgWrap.style.display="";
-    if(imgPreview) imgPreview.style.display="none";
-  }
-  const r=Math.min(200/aR,170/hR),w=a*r,hh=h*r,x=(220-w)/2,y=(190-hh)/2,b=8;
-  const m=document.getElementById("svgMarco"),v1=document.getElementById("svgVidrio1"),v2=document.getElementById("svgVidrio2");
-  const d=document.getElementById("svgDivisor"),f1=document.getElementById("svgFlecha1"),f2=document.getElementById("svgFlecha2");
-  const c=document.getElementById("svgContra"),hl=document.getElementById("svgHLine"),tag=document.getElementById("tipoTag");
-  m.setAttribute("x",x);m.setAttribute("y",y);m.setAttribute("width",w);m.setAttribute("height",hh);m.setAttribute("stroke",CSVG[colorSel]);
-  [v2,d,f1,f2,c,hl].forEach(el=>el.style.display="none");f1.textContent="→";f2.textContent="←";
-  tag.textContent=TLBL[tipoSel]||"—";
-  if(tipoSel==="pano"){v1.setAttribute("x",x+b);v1.setAttribute("y",y+b);v1.setAttribute("width",w-b*2);v1.setAttribute("height",hh-b*2);v1.style.display="";c.setAttribute("x",x+3);c.setAttribute("y",y+3);c.setAttribute("width",w-6);c.setAttribute("height",hh-6);c.style.display="";}
-  else if(tipoSel==="corrediza"){const mid=x+w/2;v1.setAttribute("x",x+b);v1.setAttribute("y",y+b);v1.setAttribute("width",w/2-b-1);v1.setAttribute("height",hh-b*2);v1.style.display="";v2.setAttribute("x",mid+2);v2.setAttribute("y",y+b);v2.setAttribute("width",w/2-b-1);v2.setAttribute("height",hh-b*2);v2.style.display="";d.setAttribute("x1",mid);d.setAttribute("y1",y+b);d.setAttribute("x2",mid);d.setAttribute("y2",y+hh-b);d.setAttribute("stroke",CSVG[colorSel]);d.style.display="";f1.setAttribute("x",x+w*0.25);f1.setAttribute("y",y+hh/2+8);f1.style.display="";f2.setAttribute("x",x+w*0.75);f2.setAttribute("y",y+hh/2+8);f2.style.display="";}
-  else if(tipoSel==="corrediza3"){const t1=x+w/3,t2=x+2*w/3;v1.setAttribute("x",x+b);v1.setAttribute("y",y+b);v1.setAttribute("width",w-b*2);v1.setAttribute("height",hh-b*2);v1.style.display="";d.setAttribute("x1",t1);d.setAttribute("y1",y+b);d.setAttribute("x2",t1);d.setAttribute("y2",y+hh-b);d.setAttribute("stroke",CSVG[colorSel]);d.style.display="";hl.setAttribute("x1",t2);hl.setAttribute("y1",y+b);hl.setAttribute("x2",t2);hl.setAttribute("y2",y+hh-b);hl.setAttribute("stroke",CSVG[colorSel]);hl.style.display="";f1.setAttribute("x",x+w*0.17);f1.setAttribute("y",y+hh/2+8);f1.textContent="→";f1.style.display="";f2.setAttribute("x",x+w*0.83);f2.setAttribute("y",y+hh/2+8);f2.textContent="←";f2.style.display="";}
-  else if(tipoSel==="banderola"||tipoSel==="brazo"){v1.setAttribute("x",x+b);v1.setAttribute("y",y+b);v1.setAttribute("width",w-b*2);v1.setAttribute("height",hh-b*2);v1.style.display="";f1.setAttribute("x",x+w*0.3);f1.setAttribute("y",y+hh*0.6);f1.textContent="↗";f1.style.display="";f2.setAttribute("x",x+w*0.62);f2.setAttribute("y",y+hh*0.6);f2.textContent="↗";f2.style.display="";}
-  else if(tipoSel==="oscilobatiente"){v1.setAttribute("x",x+b);v1.setAttribute("y",y+b);v1.setAttribute("width",w-b*2);v1.setAttribute("height",hh-b*2);v1.style.display="";d.setAttribute("x1",x+b);d.setAttribute("y1",y+hh-b);d.setAttribute("x2",x+w/2);d.setAttribute("y2",y+hh/2);d.setAttribute("stroke","#888");d.style.display="";f1.setAttribute("x",x+w*0.25);f1.setAttribute("y",y+hh*0.4);f1.textContent="↑";f1.style.display="";f2.setAttribute("x",x+w*0.65);f2.setAttribute("y",y+hh*0.65);f2.textContent="↩";f2.style.display="";}
-  else if(tipoSel==="raja"){v1.setAttribute("x",x+b);v1.setAttribute("y",y+b);v1.setAttribute("width",w-b*2);v1.setAttribute("height",hh-b*2);v1.style.display="";c.setAttribute("x",x+3);c.setAttribute("y",y+3);c.setAttribute("width",w-6);c.setAttribute("height",hh-6);c.style.display="";hl.setAttribute("x1",x);hl.setAttribute("y1",y+hh/2);hl.setAttribute("x2",x+w);hl.setAttribute("y2",y+hh/2);hl.setAttribute("stroke",CSVG[colorSel]);hl.style.display="";}
-  document.getElementById("dimsLabel").textContent=`${aR} × ${hR} mm`;
-}
+function actualizarPreview(){}
 function abrirModal(){
   if(carrito.length===0){alert("El presupuesto está vacío");return;}
   document.getElementById("modalCliente").style.display="block";
@@ -1699,10 +1642,8 @@ function getMM(){
   return unidad==="cm"?{a:a*10,h:h*10}:{a,h};
 }
 function fmt(n){return Math.round(n).toLocaleString("es-AR");}
-document.getElementById("ancho").addEventListener("input",actualizarPreview);
-document.getElementById("alto").addEventListener("input",actualizarPreview);
 document.querySelector(".logo-img").style.cursor="pointer";
-document.querySelector(".logo-img").onclick=()=>irPaso(1);
+document.querySelector(".logo-img").onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
 // URL del Apps Script desplegado — esta se reemplaza al final
 const PRECIOS_URL="https://script.google.com/macros/s/AKfycbx8IKPa0Ck0V5SGuMcgEg0BkotgbcL1zZISDyZeXnFCgW1L0SnRB2_cY-Cred_LDCo-mQ/exec";
 
