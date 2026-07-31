@@ -518,6 +518,11 @@ input[type=number]:focus{border-bottom-color:var(--black);}
           </svg>
         </div>
         <div class="dims-lbl" id="dimsLabel">1500 × 1100 mm</div>
+        <div id="precioPreviewBox" style="display:none;margin-top:24px;border-top:2px solid var(--black);padding-top:20px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray-500);margin-bottom:8px;">Precio estimado</div>
+          <div style="font-size:28px;font-weight:800;color:var(--black);letter-spacing:-1px;">$<span id="precioPreviewVal">—</span></div>
+          <div style="font-size:10px;color:var(--gray-300);margin-top:4px;letter-spacing:1px;">SIN IVA · POR UNIDAD</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1107,7 +1112,7 @@ function actualizarColores(){
     }
   });
 }
-function toggleOpcional(el){el.classList.toggle("selected");const k=el.dataset.opc;if(opcionalesSel.has(k))opcionalesSel.delete(k);else opcionalesSel.add(k);}
+function toggleOpcional(el){el.classList.toggle("selected");const k=el.dataset.opc;if(opcionalesSel.has(k))opcionalesSel.delete(k);else opcionalesSel.add(k);actualizarPrecioPreview();}
 function actualizarOpcionales(){
   const mosq=document.querySelector(".opc-card[data-opc='mosquitero']");
   const bipWrap=document.getElementById("opcBipuntoWrap");
@@ -1336,6 +1341,15 @@ function actualizarPreview(){
   else if(tipoSel==="oscilobatiente"){v1.setAttribute("x",x+b);v1.setAttribute("y",y+b);v1.setAttribute("width",w-b*2);v1.setAttribute("height",hh-b*2);v1.style.display="";d.setAttribute("x1",x+b);d.setAttribute("y1",y+hh-b);d.setAttribute("x2",x+w/2);d.setAttribute("y2",y+hh/2);d.setAttribute("stroke","#888");d.style.display="";f1.setAttribute("x",x+w*0.25);f1.setAttribute("y",y+hh*0.4);f1.textContent="↑";f1.style.display="";f2.setAttribute("x",x+w*0.65);f2.setAttribute("y",y+hh*0.65);f2.textContent="↩";f2.style.display="";}
   else if(tipoSel==="raja"){v1.setAttribute("x",x+b);v1.setAttribute("y",y+b);v1.setAttribute("width",w-b*2);v1.setAttribute("height",hh-b*2);v1.style.display="";c.setAttribute("x",x+3);c.setAttribute("y",y+3);c.setAttribute("width",w-6);c.setAttribute("height",hh-6);c.style.display="";hl.setAttribute("x1",x);hl.setAttribute("y1",y+hh/2);hl.setAttribute("x2",x+w);hl.setAttribute("y2",y+hh/2);hl.setAttribute("stroke",CSVG[colorSel]);hl.style.display="";}
   document.getElementById("dimsLabel").textContent=`${aR} × ${hR} mm`;
+  actualizarPrecioPreview();
+}
+function actualizarPrecioPreview(){
+  const box=document.getElementById("precioPreviewBox");
+  const val=document.getElementById("precioPreviewVal");
+  if(!box||!val)return;
+  try{const{a,h}=getMM();if(!a||!h||a<300||h<300){box.style.display="none";return;}
+  const p=calc(a,h);if(!p||p<=0){box.style.display="none";return;}
+  val.textContent=fmt(p);box.style.display="";}catch(e){box.style.display="none";}
 }
 function abrirModal(){
   if(carrito.length===0){alert("El presupuesto está vacío");return;}
