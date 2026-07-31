@@ -1055,11 +1055,24 @@ function _buildCardHTML(card,num){
 }
 
 function _buildSVG(card){
-  // Use real product photo if available
+  // Use real product photo if available, in a proportional container
   if(typeof TIMG!=="undefined"&&TIMG[card.tipo]){
     const imgSrc=TIMG[card.tipo][card.color]||TIMG[card.tipo].blanco||"";
     if(imgSrc){
-      return`<img src="${imgSrc}" style="max-width:100%;max-height:220px;object-fit:contain;display:block;margin:auto;">`;
+      const a=card.ancho||1500,h=card.alto||1100;
+      const maxW=200,maxH=200;
+      const r=Math.min(maxW/a,maxH/h);
+      const pw=Math.round(a*r),ph=Math.round(h*r);
+      const hasA=card.ancho,hasH=card.alto;
+      const anchoLbl=hasA?`${a} mm`:"— mm";
+      const altoLbl=hasH?`${h} mm`:"— mm";
+      return`<div style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="font-size:10px;color:#888;font-family:monospace;letter-spacing:.5px;">${anchoLbl}</div>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <img src="${imgSrc}" style="width:${pw}px;height:${ph}px;object-fit:fill;display:block;border:1px solid #ddd;">
+          <div style="font-size:10px;color:#888;font-family:monospace;writing-mode:vertical-rl;letter-spacing:.5px;">${altoLbl}</div>
+        </div>
+      </div>`;
     }
   }
   const a=card.ancho||1500,h=card.alto||1100;
