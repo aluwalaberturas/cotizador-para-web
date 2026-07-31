@@ -1024,7 +1024,7 @@ function _buildCardHTML(card,num){
 <div class="aber-header" onclick="_toggleCard(${card.id},event)" style="cursor:pointer;">
   <div style="display:flex;align-items:center;gap:16px;min-width:0;flex:1;">
     <span class="aber-num" style="white-space:nowrap;">V${num}</span>
-    ${card.collapsed?`<span style="font-size:12px;font-weight:600;letter-spacing:.5px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${TLBL[card.tipo]||card.tipo} · ${card.linea==="modena"?"Módena":card.linea==="a30"?"A·30":"Recuperado"} · ${card.color.charAt(0).toUpperCase()+card.color.slice(1)} · ${VLBL[card.vidrio]||card.vidrio}${card.ancho?" · "+card.ancho+"×"+card.alto+"mm":""} ×${card.cantidad}</span>`:""}
+    <span style="font-size:12px;font-weight:600;letter-spacing:.5px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${TLBL[card.tipo]||card.tipo} · ${card.linea==="modena"?"Módena":card.linea==="a30"?"A·30":"Recuperado"} · ${card.color.charAt(0).toUpperCase()+card.color.slice(1)} · ${VLBL[card.vidrio]||card.vidrio}${card.ancho?" · "+card.ancho+"×"+card.alto+"mm":""} ×${card.cantidad}</span>
   </div>
   <div style="display:flex;align-items:center;gap:10px;">
     <span style="font-size:18px;opacity:.6;transition:transform .2s;transform:rotate(${card.collapsed?"-90deg":"0deg"});">›</span>
