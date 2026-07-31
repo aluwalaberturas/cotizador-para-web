@@ -953,7 +953,7 @@ const COLORES_CARD=[
 
 function addCard(){
   const id=++_cardN;
-  _cards.push({id,linea:"modena",tipo:"corrediza",color:"blanco",vidrio:"comun",opc:new Set(),ancho:null,alto:null,cantidad:1});
+  _cards.push({id,linea:"modena",tipo:"corrediza",color:"blanco",vidrio:"comun",opc:new Set(),ancho:null,alto:null,cantidad:1,collapsed:false});
   _renderCards();
   requestAnimationFrame(()=>{
     const el=document.querySelector(`[data-card-id="${id}"]`);
@@ -1013,11 +1013,17 @@ function _buildCardHTML(card,num){
     hayBip?`<label class="extra-check"><input type="checkbox"${card.opc.has("bipunto")?" checked":""} onchange="_setOpc(${card.id},'bipunto',this.checked)"><span>Cierre bipunto</span></label>`:""
   ].filter(Boolean).join("");
   return`
-<div class="aber-header">
-  <span class="aber-num">ABERTURA ${num}</span>
-  <button onclick="_removeCard(${card.id})" style="background:none;border:none;color:var(--white);cursor:pointer;font-size:16px;opacity:.7;padding:4px 8px;">✕</button>
+<div class="aber-header" onclick="_toggleCard(${card.id},event)" style="cursor:pointer;">
+  <div style="display:flex;align-items:center;gap:16px;min-width:0;flex:1;">
+    <span class="aber-num" style="white-space:nowrap;">V${num}</span>
+    ${card.collapsed?`<span style="font-size:12px;font-weight:600;letter-spacing:.5px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${TLBL[card.tipo]||card.tipo} · ${card.linea==="modena"?"Módena":card.linea==="a30"?"A·30":"Recuperado"} · ${card.color.charAt(0).toUpperCase()+card.color.slice(1)}${card.ancho?" · "+card.ancho+"×"+card.alto+"mm":""} ×${card.cantidad}</span>`:""}
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <span style="font-size:18px;opacity:.6;transition:transform .2s;transform:rotate(${card.collapsed?"-90deg":"0deg"});">›</span>
+    <button onclick="_removeCard(${card.id})" style="background:none;border:none;color:var(--white);cursor:pointer;font-size:16px;opacity:.7;padding:4px 8px;">✕</button>
+  </div>
 </div>
-<div class="aber-body">
+<div class="aber-body" style="${card.collapsed?"display:none;":""}">
   <div class="aber-left">
     ${_cardSLBL("Línea")}<div class="linea-tabs" style="margin-bottom:22px;">${lineaTabs}</div>
     ${_cardSLBL("Tipo")}<div class="tipo-chips" style="margin-bottom:22px;">${tipoChips}</div>
@@ -1079,6 +1085,7 @@ function _buildSVG(card){
 </svg>`;
 }
 
+function _toggleCard(id,e){if(e.target.closest('button'))return;const c=_getCard(id);if(!c)return;c.collapsed=!c.collapsed;_rebuildCard(id);}
 function _setLinea(id,val){const c=_getCard(id);if(!c)return;c.linea=val;if(val==="modena-recuperado"&&(c.color==="anodizado"||c.color==="similmadera"))c.color="blanco";_rebuildCard(id);}
 function _setTipo(id,val){const c=_getCard(id);if(!c)return;c.tipo=val;_rebuildCard(id);}
 function _setColor(id,val){const c=_getCard(id);if(!c)return;c.color=val;_rebuildCard(id);}
