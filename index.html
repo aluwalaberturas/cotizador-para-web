@@ -112,8 +112,8 @@ header{
 .linea-tabs{display:flex;gap:2px;background:var(--black);}
 .ltab{flex:1;padding:10px 8px;background:var(--white);border:none;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background .15s;color:var(--black);}
 .ltab:hover{background:var(--gray-50);}.ltab.active{background:var(--black);color:var(--white);}
-.tipo-chips{display:flex;flex-wrap:wrap;gap:1px;background:var(--gray-100);}
-.tchip{padding:8px 14px;background:var(--white);border:none;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background .15s;color:var(--black);}
+.tipo-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-100);}
+.tchip{padding:14px 8px;background:var(--white);border:none;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background .15s;color:var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90px;}
 .tchip:hover{background:var(--gray-50);}.tchip.active{background:var(--black);color:var(--white);}
 .color-dots{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--black);}
 .cdot-btn{background:var(--white);border:none;padding:10px 6px;text-align:center;cursor:pointer;transition:background .15s;}
@@ -996,10 +996,13 @@ function _buildCardHTML(card,num){
   const lineas=[{val:"modena",lbl:"Módena"},{val:"a30",lbl:"A·30"},{val:"modena-recuperado",lbl:"Recuperado"}];
   const lineaTabs=lineas.map(l=>`<button class="ltab${card.linea===l.val?" active":""}" onclick="_setLinea(${card.id},'${l.val}')">${l.lbl}</button>`).join("");
   const tiposDisp=card.linea==="a30"?["pano","banderola","brazo","oscilobatiente","raja","corrediza","corrediza3"]:TIPOS.map(t=>t.id);
-  const tipoChips=TIPOS.filter(t=>tiposDisp.includes(t.id)).map(t=>{
+  const _tiposFilt=TIPOS.filter(t=>tiposDisp.includes(t.id));
+  const tipoChips=_tiposFilt.map((t,i)=>{
     const imgSrc=(typeof TIMG!=="undefined"&&TIMG[t.id])?(TIMG[t.id][card.color]||TIMG[t.id].blanco||""):"";
-    const icon=imgSrc?`<img src="${imgSrc}" style="height:32px;object-fit:contain;display:block;margin:0 auto 3px;">`:`<span style="font-size:18px;display:block;text-align:center;margin-bottom:3px;">${t.icon}</span>`;
-    return`<button class="tchip${card.tipo===t.id?" active":""}" onclick="_setTipo(${card.id},'${t.id}')" style="min-width:80px;text-align:center;padding:8px 10px;">${icon}<span style="font-size:9px;">${t.label}</span></button>`;
+    const icon=imgSrc?`<img src="${imgSrc}" style="height:34px;object-fit:contain;display:block;margin:0 auto 4px;">`:`<span style="font-size:18px;display:block;text-align:center;margin-bottom:4px;">${t.icon}</span>`;
+    const isLast=i===_tiposFilt.length-1;
+    const alone=isLast&&(_tiposFilt.length%3===1);
+    return`<button class="tchip${card.tipo===t.id?" active":""}" onclick="_setTipo(${card.id},'${t.id}')" style="${alone?"grid-column:2;":""}">${icon}<span style="font-size:9px;">${t.label}</span></button>`;
   }).join("");
   const colFilt=COLORES_CARD.filter(c=>card.linea==="modena-recuperado"?c.val==="blanco"||c.val==="negro":true);
   const colorDots=colFilt.map(c=>`<button class="cdot-btn${card.color===c.val?" active":""}" onclick="_setColor(${card.id},'${c.val}')" title="${c.lbl}"><span class="cdot" style="background:${c.css};width:22px;height:22px;display:inline-block;border-radius:50%;margin-bottom:4px;border:1px solid rgba(0,0,0,.15);"></span><span class="cname" style="display:block;font-size:8px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:inherit;">${c.lbl}</span></button>`).join("");
