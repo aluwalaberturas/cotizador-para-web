@@ -1068,15 +1068,29 @@ function _buildSVG(card){
   const dim="#444"; // color cotas
   const hasA=card.ancho, hasH=card.alto;
 
-  // Marco con corte en diagonal en esquinas (líneas internas que van de esquina a esquina)
-  const frameOuter=`<rect x="${x}" y="${y}" width="${w}" height="${hh}" fill="${fc}" stroke="none"/>`;
+  const hasCM=card.opc.has("contramarco");
+  const cm=hasCM?13:0;
+  const fstroke="#999";
+
+  // Marco ventana
+  const frameOuter=`<rect x="${x}" y="${y}" width="${w}" height="${hh}" fill="${fc}" stroke="${fstroke}" stroke-width="1"/>`;
   const frameInner=`<rect x="${x+b}" y="${y+b}" width="${w-b*2}" height="${hh-b*2}" fill="${glass}" stroke="none"/>`;
-  // Líneas de corte en mitra (esquinas diagonales)
   const mitras=`
-    <line x1="${x}" y1="${y}" x2="${x+b}" y2="${y+b}" stroke="#666" stroke-width=".8"/>
-    <line x1="${x+w}" y1="${y}" x2="${x+w-b}" y2="${y+b}" stroke="#666" stroke-width=".8"/>
-    <line x1="${x}" y1="${y+hh}" x2="${x+b}" y2="${y+hh-b}" stroke="#666" stroke-width=".8"/>
-    <line x1="${x+w}" y1="${y+hh}" x2="${x+w-b}" y2="${y+hh-b}" stroke="#666" stroke-width=".8"/>`;
+    <line x1="${x}" y1="${y}" x2="${x+b}" y2="${y+b}" stroke="${fstroke}" stroke-width=".8"/>
+    <line x1="${x+w}" y1="${y}" x2="${x+w-b}" y2="${y+b}" stroke="${fstroke}" stroke-width=".8"/>
+    <line x1="${x}" y1="${y+hh}" x2="${x+b}" y2="${y+hh-b}" stroke="${fstroke}" stroke-width=".8"/>
+    <line x1="${x+w}" y1="${y+hh}" x2="${x+w-b}" y2="${y+hh-b}" stroke="${fstroke}" stroke-width=".8"/>`;
+
+  // Contramarco exterior con mitras
+  const ox=x-cm,oy=y-cm,ow=w+cm*2,ohh=hh+cm*2;
+  const contramarcoSVG=hasCM?`
+    <rect x="${ox}" y="${oy}" width="${ow}" height="${ohh}" fill="${fc}" stroke="${fstroke}" stroke-width="1"/>
+    <rect x="${ox+3}" y="${oy+3}" width="${ow-6}" height="${ohh-6}" fill="none" stroke="${fstroke}" stroke-width=".5"/>
+    <line x1="${ox}" y1="${oy}" x2="${x}" y2="${y}" stroke="${fstroke}" stroke-width=".8"/>
+    <line x1="${ox+ow}" y1="${oy}" x2="${x+w}" y2="${y}" stroke="${fstroke}" stroke-width=".8"/>
+    <line x1="${ox}" y1="${oy+ohh}" x2="${x}" y2="${y+hh}" stroke="${fstroke}" stroke-width=".8"/>
+    <line x1="${ox+ow}" y1="${oy+ohh}" x2="${x+w}" y2="${y+hh}" stroke="${fstroke}" stroke-width=".8"/>
+  `:"";
 
   // Interior según tipo
   let interior="";
@@ -1131,7 +1145,7 @@ function _buildSVG(card){
     <text x="${cotaX+4}" y="${y+hh/2+3}" text-anchor="start" font-size="9" fill="${dim}" font-family="monospace">${altoLbl}</text>`;
 
   return`<svg viewBox="0 0 ${VW} ${VH}" width="${VW}" height="${VH}" xmlns="http://www.w3.org/2000/svg">
-  ${frameOuter}${frameInner}${mitras}${interior}${cotaAncho}${cotaAlto}
+  ${contramarcoSVG}${frameOuter}${frameInner}${mitras}${interior}${cotaAncho}${cotaAlto}
 </svg>`;
 }
 
