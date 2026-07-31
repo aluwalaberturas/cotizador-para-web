@@ -1055,6 +1055,13 @@ function _buildCardHTML(card,num){
 }
 
 function _buildSVG(card){
+  // Use real product photo if available
+  if(typeof TIMG!=="undefined"&&TIMG[card.tipo]){
+    const imgSrc=TIMG[card.tipo][card.color]||TIMG[card.tipo].blanco||"";
+    if(imgSrc){
+      return`<img src="${imgSrc}" style="max-width:100%;max-height:220px;object-fit:contain;display:block;margin:auto;">`;
+    }
+  }
   const a=card.ancho||1500,h=card.alto||1100;
   const VW=260,VH=240,MX=30,MY=24;
   const aw=VW-MX-14,ah=VH-MY-14;
