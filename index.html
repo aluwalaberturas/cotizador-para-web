@@ -115,12 +115,12 @@ header{
 .tipo-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-100);}
 .tchip{padding:14px 8px;background:var(--white);border:none;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background .15s;color:var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90px;}
 .tchip:hover{background:var(--gray-50);}.tchip.active{background:var(--black);color:var(--white);}
-.color-dots{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--black);}
-.cdot-btn{background:var(--white);border:none;padding:10px 6px;text-align:center;cursor:pointer;transition:background .15s;}
-.cdot-btn:hover{background:var(--gray-50);}.cdot-btn.active{background:var(--black);}
+.color-dots{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--gray-100);}
+.cdot-btn{background:var(--white);border:none;padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s;outline:2px solid transparent;outline-offset:-2px;}
+.cdot-btn:hover{background:var(--gray-50);}.cdot-btn.active{background:var(--white);outline:2px solid var(--black);}
 .cdot{width:18px;height:18px;border-radius:50%;margin:0 auto 5px;border:1px solid var(--gray-200);}
 .cname{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--black);transition:color .15s;}
-.cdot-btn.active .cname{color:var(--white);}.cdot-btn.active .cdot{border-color:#444;}
+.cdot-btn.active .cname{color:var(--black);}.cdot-btn.active .cdot{border-color:#444;}
 .vidrio-pills{display:flex;gap:2px;background:var(--black);}
 .vpill{flex:1;padding:10px 8px;background:var(--white);border:none;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .15s;color:var(--black);text-align:center;}
 .vpill:hover{background:var(--gray-50);}.vpill.active{background:var(--black);color:var(--white);}
