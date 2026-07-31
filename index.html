@@ -971,11 +971,11 @@ function _removeCard(id){
 function _renderCards(){
   const wrap=document.getElementById("cardsWrap");
   const es=document.getElementById("emptyState");
-  if(_cards.length===0){es.style.display="";return;}
-  es.style.display="none";
   wrap.querySelectorAll(".aber-card").forEach(e=>{
     if(!_cards.find(c=>c.id===parseInt(e.dataset.cardId)))e.remove();
   });
+  if(_cards.length===0){es.style.display="";return;}
+  es.style.display="none";
   _cards.forEach((card,idx)=>{
     let cardEl=wrap.querySelector(`[data-card-id="${card.id}"]`);
     if(!cardEl){
