@@ -965,7 +965,11 @@ function _getCard(id){return _cards.find(c=>c.id===id);}
 
 function _removeCard(id){
   _cards=_cards.filter(c=>c.id!==id);
-  _renderCards();
+  const el=document.querySelector(`[data-card-id="${id}"]`);
+  if(el)el.remove();
+  const es=document.getElementById("emptyState");
+  if(_cards.length===0){if(es)es.style.display="";}
+  else{if(es)es.style.display="none";_renderCards();}
 }
 
 function _renderCards(){
