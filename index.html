@@ -952,6 +952,7 @@ const COLORES_CARD=[
 ];
 
 function addCard(){
+  _cards.forEach(c=>c.collapsed=true);
   const id=++_cardN;
   _cards.push({id,linea:"modena",tipo:"corrediza",color:"blanco",vidrio:"comun",opc:new Set(),ancho:null,alto:null,cantidad:1,collapsed:false});
   _renderCards();
