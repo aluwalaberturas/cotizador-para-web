@@ -1056,40 +1056,82 @@ function _buildCardHTML(card,num){
 
 function _buildSVG(card){
   const a=card.ancho||1500,h=card.alto||1100;
-  const r=Math.min(200/a,180/h),w=a*r,hh=h*r;
-  const x=(210-w)/2,y=(200-hh)/2,b=7;
-  const stroke=CSVG[card.color]||"#aaa";
-  let inner="";
+  // Canvas 260x240, dejar margen para cotas
+  const VW=260,VH=240,MX=30,MY=24;
+  const aw=VW-MX-14,ah=VH-MY-14;
+  const r=Math.min(aw/a,ah/h);
+  const w=a*r,hh=h*r;
+  const x=MX+(aw-w)/2,y=MY+(ah-hh)/2;
+  const b=6; // grosor marco
+  const fc="#888"; // color marco (gris neutro técnico, independiente del color real)
+  const glass="#e8f4fb";
+  const dim="#444"; // color cotas
+  const hasA=card.ancho, hasH=card.alto;
+
+  // Marco con corte en diagonal en esquinas (líneas internas que van de esquina a esquina)
+  const frameOuter=`<rect x="${x}" y="${y}" width="${w}" height="${hh}" fill="${fc}" stroke="none"/>`;
+  const frameInner=`<rect x="${x+b}" y="${y+b}" width="${w-b*2}" height="${hh-b*2}" fill="${glass}" stroke="none"/>`;
+  // Líneas de corte en mitra (esquinas diagonales)
+  const mitras=`
+    <line x1="${x}" y1="${y}" x2="${x+b}" y2="${y+b}" stroke="#666" stroke-width=".8"/>
+    <line x1="${x+w}" y1="${y}" x2="${x+w-b}" y2="${y+b}" stroke="#666" stroke-width=".8"/>
+    <line x1="${x}" y1="${y+hh}" x2="${x+b}" y2="${y+hh-b}" stroke="#666" stroke-width=".8"/>
+    <line x1="${x+w}" y1="${y+hh}" x2="${x+w-b}" y2="${y+hh-b}" stroke="#666" stroke-width=".8"/>`;
+
+  // Interior según tipo
+  let interior="";
   if(card.tipo==="corrediza"){
     const mid=x+w/2;
-    inner=`<rect x="${x+b}" y="${y+b}" width="${w/2-b-1}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>
-    <rect x="${mid+2}" y="${y+b}" width="${w/2-b-1}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>
-    <line x1="${mid}" y1="${y+b}" x2="${mid}" y2="${y+hh-b}" stroke="${stroke}" stroke-width="2"/>
-    <text x="${x+w*.25}" y="${y+hh/2+6}" text-anchor="middle" font-size="16" fill="${stroke}">→</text>
-    <text x="${x+w*.75}" y="${y+hh/2+6}" text-anchor="middle" font-size="16" fill="${stroke}">←</text>`;
+    interior=`<line x1="${mid}" y1="${y+b}" x2="${mid}" y2="${y+hh-b}" stroke="${fc}" stroke-width="${b}"/>
+    <text x="${x+w*.28}" y="${y+hh/2+5}" text-anchor="middle" font-size="13" fill="#888">→</text>
+    <text x="${x+w*.72}" y="${y+hh/2+5}" text-anchor="middle" font-size="13" fill="#888">←</text>`;
   } else if(card.tipo==="corrediza3"){
     const t1=x+w/3,t2=x+2*w/3;
-    inner=`<rect x="${x+b}" y="${y+b}" width="${w-b*2}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>
-    <line x1="${t1}" y1="${y+b}" x2="${t1}" y2="${y+hh-b}" stroke="${stroke}" stroke-width="2"/>
-    <line x1="${t2}" y1="${y+b}" x2="${t2}" y2="${y+hh-b}" stroke="${stroke}" stroke-width="2"/>
-    <text x="${x+w*.17}" y="${y+hh/2+6}" text-anchor="middle" font-size="14" fill="${stroke}">→</text>
-    <text x="${x+w*.83}" y="${y+hh/2+6}" text-anchor="middle" font-size="14" fill="${stroke}">←</text>`;
+    interior=`<line x1="${t1}" y1="${y+b}" x2="${t1}" y2="${y+hh-b}" stroke="${fc}" stroke-width="${b}"/>
+    <line x1="${t2}" y1="${y+b}" x2="${t2}" y2="${y+hh-b}" stroke="${fc}" stroke-width="${b}"/>
+    <text x="${x+w*.17}" y="${y+hh/2+5}" text-anchor="middle" font-size="11" fill="#888">→</text>
+    <text x="${x+w*.5}" y="${y+hh/2+5}" text-anchor="middle" font-size="11" fill="#888">←→</text>
+    <text x="${x+w*.83}" y="${y+hh/2+5}" text-anchor="middle" font-size="11" fill="#888">←</text>`;
   } else if(card.tipo==="banderola"||card.tipo==="brazo"){
-    inner=`<rect x="${x+b}" y="${y+b}" width="${w-b*2}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>
-    <text x="${x+w/2}" y="${y+hh*.65}" text-anchor="middle" font-size="24" fill="${stroke}">↗</text>`;
+    interior=`<line x1="${x+b}" y1="${y+hh-b}" x2="${x+w-b}" y2="${y+b}" stroke="#aaa" stroke-width="1" stroke-dasharray="3,2"/>
+    <text x="${x+w/2}" y="${y+hh*.6}" text-anchor="middle" font-size="16" fill="#888">↗</text>`;
   } else if(card.tipo==="oscilobatiente"){
-    inner=`<rect x="${x+b}" y="${y+b}" width="${w-b*2}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>
-    <line x1="${x+b}" y1="${y+hh-b}" x2="${x+w/2}" y2="${y+hh/2}" stroke="#888" stroke-width="1.5"/>
-    <text x="${x+w*.65}" y="${y+hh*.45}" text-anchor="middle" font-size="18" fill="${stroke}">↩</text>`;
+    interior=`<line x1="${x+b}" y1="${y+hh-b}" x2="${x+w-b}" y2="${y+hh/2}" stroke="#aaa" stroke-width="1" stroke-dasharray="3,2"/>
+    <line x1="${x+b}" y1="${y+hh-b}" x2="${x+w/2}" y2="${y+b}" stroke="#aaa" stroke-width="1" stroke-dasharray="3,2"/>`;
   } else if(card.tipo==="raja"){
-    inner=`<rect x="${x+b}" y="${y+b}" width="${w-b*2}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>
-    <line x1="${x}" y1="${y+hh/2}" x2="${x+w}" y2="${y+hh/2}" stroke="${stroke}" stroke-width="2"/>`;
-  } else {
-    inner=`<rect x="${x+b}" y="${y+b}" width="${w-b*2}" height="${hh-b*2}" fill="#d4eaf7" opacity=".5"/>`;
+    const mid=y+hh/2;
+    interior=`<line x1="${x+b}" y1="${mid}" x2="${x+w-b}" y2="${mid}" stroke="${fc}" stroke-width="${b}"/>`;
   }
-  return`<svg viewBox="0 0 210 200" width="210" height="200" xmlns="http://www.w3.org/2000/svg">
-  <rect x="${x}" y="${y}" width="${w}" height="${hh}" fill="none" stroke="${stroke}" stroke-width="${b}"/>
-  ${inner}
+
+  // COTAS
+  const tickLen=4,ext=8;
+  // Cota ancho (arriba)
+  const cotaY=y-ext;
+  const anchoLbl=hasA?`${a}`:"—";
+  const cotaAncho=`
+    <line x1="${x}" y1="${y}" x2="${x}" y2="${cotaY-tickLen}" stroke="${dim}" stroke-width=".8"/>
+    <line x1="${x+w}" y1="${y}" x2="${x+w}" y2="${cotaY-tickLen}" stroke="${dim}" stroke-width=".8"/>
+    <line x1="${x}" y1="${cotaY}" x2="${x+w}" y2="${cotaY}" stroke="${dim}" stroke-width=".8"/>
+    <line x1="${x}" y1="${cotaY}" x2="${x+4}" y2="${cotaY-3}" stroke="${dim}" stroke-width=".8"/>
+    <line x1="${x}" y1="${cotaY}" x2="${x+4}" y2="${cotaY+3}" stroke="${dim}" stroke-width=".8"/>
+    <line x1="${x+w}" y1="${cotaY}" x2="${x+w-4}" y2="${cotaY-3}" stroke="${dim}" stroke-width=".8"/>
+    <line x1="${x+w}" y1="${cotaY}" x2="${x+w-4}" y2="${cotaY+3}" stroke="${dim}" stroke-width=".8"/>
+    <text x="${x+w/2}" y="${cotaY-3}" text-anchor="middle" font-size="9" fill="${dim}" font-family="monospace">${anchoLbl}</text>`;
+  // Cota alto (derecha)
+  const cotaX=x+w+ext;
+  const altoLbl=hasH?`${h}`:"—";
+  const cotaAlto=`
+    <line x1="${x+w}" y1="${y}" x2="${cotaX+tickLen}" y2="${y}" stroke="${dim}" stroke-width=".8"/>
+    <line x1="${x+w}" y1="${y+hh}" x2="${cotaX+tickLen}" y2="${y+hh}" stroke="${dim}" stroke-width=".8"/>
+    <line x1="${cotaX}" y1="${y}" x2="${cotaX}" y2="${y+hh}" stroke="${dim}" stroke-width=".8"/>
+    <line x1="${cotaX}" y1="${y}" x2="${cotaX-3}" y2="${y+4}" stroke="${dim}" stroke-width=".8"/>
+    <line x1="${cotaX}" y1="${y}" x2="${cotaX+3}" y2="${y+4}" stroke="${dim}" stroke-width=".8"/>
+    <line x1="${cotaX}" y1="${y+hh}" x2="${cotaX-3}" y2="${y+hh-4}" stroke="${dim}" stroke-width=".8"/>
+    <line x1="${cotaX}" y1="${y+hh}" x2="${cotaX+3}" y2="${y+hh-4}" stroke="${dim}" stroke-width=".8"/>
+    <text x="${cotaX+4}" y="${y+hh/2+3}" text-anchor="start" font-size="9" fill="${dim}" font-family="monospace">${altoLbl}</text>`;
+
+  return`<svg viewBox="0 0 ${VW} ${VH}" width="${VW}" height="${VH}" xmlns="http://www.w3.org/2000/svg">
+  ${frameOuter}${frameInner}${mitras}${interior}${cotaAncho}${cotaAlto}
 </svg>`;
 }
 
