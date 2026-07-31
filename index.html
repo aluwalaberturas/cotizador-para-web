@@ -1142,8 +1142,9 @@ function _setColor(id,val){const c=_getCard(id);if(!c)return;c.color=val;_rebuil
 function _setVidrio(id,val){const c=_getCard(id);if(!c)return;c.vidrio=val;_rebuildCard(id);}
 function _setAncho(id,val){
   const c=_getCard(id);if(!c)return;
+  const maxA=c.tipo==="corrediza3"?5000:3500;
   let v=parseInt(val)||null;
-  if(v&&v>3500){v=3500;const el=document.querySelector(`[data-card-id="${id}"] input[oninput*="_setAncho"]`);if(el)el.value=3500;}
+  if(v&&v>maxA){v=maxA;const el=document.querySelector(`[data-card-id="${id}"] input[oninput*="_setAncho"]`);if(el)el.value=maxA;}
   c.ancho=v;_updateSVGOnly(id);
 }
 function _setAlto(id,val){
