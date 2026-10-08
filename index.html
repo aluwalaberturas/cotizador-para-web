@@ -706,8 +706,10 @@ header{
           <table class="pp-tbl">
             <thead><tr><th>Código</th><th>Descripción</th><th>kg/m</th></tr></thead>
             <tbody>
-              <tr><td class="pp-td-code">6036</td><td class="pp-td-name">Jamba</td><td><input type="number" id="pp_PA30_6036" step="0.001" class="pp-td-inp"></td></tr>
-              <tr><td class="pp-td-code">6037</td><td class="pp-td-name">Umbral</td><td><input type="number" id="pp_PA30_6037" step="0.001" class="pp-td-inp"></td></tr>
+              <tr><td class="pp-td-code">6036</td><td class="pp-td-name">Jamba 2G</td><td><input type="number" id="pp_PA30_6036" step="0.001" class="pp-td-inp"></td></tr>
+              <tr><td class="pp-td-code">6037</td><td class="pp-td-name">Umbral 2G</td><td><input type="number" id="pp_PA30_6037" step="0.001" class="pp-td-inp"></td></tr>
+              <tr><td class="pp-td-code">6080</td><td class="pp-td-name">Jamba 3G</td><td><input type="number" id="pp_PA30_3G_6080" step="0.001" class="pp-td-inp"></td></tr>
+              <tr><td class="pp-td-code">6081</td><td class="pp-td-name">Umbral 3G</td><td><input type="number" id="pp_PA30_3G_6081" step="0.001" class="pp-td-inp"></td></tr>
               <tr><td class="pp-td-code">6034</td><td class="pp-td-name">Hoja simple</td><td><input type="number" id="pp_PA30_6034" step="0.001" class="pp-td-inp"></td></tr>
               <tr><td class="pp-td-code">6035</td><td class="pp-td-name">Hoja vista</td><td><input type="number" id="pp_PA30_6035" step="0.001" class="pp-td-inp"></td></tr>
               <tr><td class="pp-td-code">6061</td><td class="pp-td-name">Zócalo</td><td><input type="number" id="pp_PA30_6061" step="0.001" class="pp-td-inp"></td></tr>
@@ -873,6 +875,8 @@ const VLBL={comun:"V.4mm","33":"V.3+3",dvh:"DVH"};
 const P={6200:1.169,6201:0.632,6203:0.618,6204:0.653,6207:0.613,6248:0.594,6249:0.626,6250:0.583,6216:0.694,6227:0.864,6215:0.864,6257:0.241,6233:0.135,6230:0.213,6255:0.424,6206:0.186,6205:0.411,6066:0.545,6038:0.594,6039:0.329,6240:1.841,6241:0.972};
 // A30 perfiles corrediza (marco siempre igual)
 const PA30={6036:0.891,6037:1.774,6034:1.399,6035:1.531,6061:0.926};
+// A30 perfiles marco 3 guías (diferentes a 2 guías)
+const PA30_3G={6080:1.701,6081:2.908};
 // A30 perfiles corrediza DVH (hojas distintas)
 const PA30DVH={6071:1.334,6072:1.466,6073:0.861};
 // A30 perfiles paño fijo
@@ -1274,8 +1278,8 @@ function panoA30(a,h){
 }
 function corredizaA303G(a,h){
   const dvh=vidrioSel==="dvh";
-  const jb=2*(h/1000)*PA30[6036];
-  const ud=2*((a-45)/1000)*PA30[6037];
+  const jb=2*(h/1000)*PA30_3G[6080];
+  const ud=2*((a-45)/1000)*PA30_3G[6081];
   const pl=2*((h-86)/1000)*(dvh?PA30DVH[6071]:PA30[6034]);
   const pc=4*((h-86)/1000)*(dvh?PA30DVH[6072]:PA30[6035]);
   const zc=6*(a/(3*1000))*(dvh?PA30DVH[6073]:PA30[6061]);
@@ -1516,6 +1520,7 @@ const PP_ORIG={
   E73_u:200,R46_u:1500,T21_u:20,
   S9_u:130,T88_u:100,E79_u:800,E66_u:35,E78_u:500,
   PA30_6036:0.891,PA30_6037:1.774,PA30_6034:1.399,PA30_6035:1.531,PA30_6061:0.926,
+  PA30_3G_6080:1.701,PA30_3G_6081:2.908,
   PA30DVH_6071:1.334,PA30DVH_6072:1.466,PA30DVH_6073:0.861,
   PA30PF_6055:1.037,PA30PF_6047:0.254,PA30PF_6048:0.197,PA30PF_6052:1.139,
   T116_u:160,R47_u:4000,T132_u:2100,T130_u:50,T131_u:45,T118_u:140,H101_u:10000,
@@ -1585,6 +1590,7 @@ function ppFill(){
     MOSQ_B_u,MOSQ_ADR_u,MOSQ_D_u,E73_u,R46_u,T21_u,
     S9_u,T88_u,E79_u,E66_u,E78_u,
     PA30_6036:PA30[6036],PA30_6037:PA30[6037],PA30_6034:PA30[6034],PA30_6035:PA30[6035],PA30_6061:PA30[6061],
+    PA30_3G_6080:PA30_3G[6080],PA30_3G_6081:PA30_3G[6081],
     PA30DVH_6071:PA30DVH[6071],PA30DVH_6072:PA30DVH[6072],PA30DVH_6073:PA30DVH[6073],
     PA30PF_6055:PA30PF[6055],PA30PF_6047:PA30PF[6047],PA30PF_6048:PA30PF[6048],PA30PF_6052:PA30PF[6052],
     T116_u,R47_u,T132_u,T130_u,T131_u,T118_u,H101_u,
@@ -1657,6 +1663,7 @@ function ppApply(){
   P[6248]=n('P6248');P[6249]=n('P6249');P[6250]=n('P6250');P[6216]=n('P6216');P[6227]=n('P6227');
   P[6215]=n('P6215');P[6257]=n('P6257');P[6233]=n('P6233');P[6230]=n('P6230');
   PA30[6036]=n('PA30_6036');PA30[6037]=n('PA30_6037');PA30[6034]=n('PA30_6034');
+  PA30_3G[6080]=n('PA30_3G_6080');PA30_3G[6081]=n('PA30_3G_6081');
   PA30[6035]=n('PA30_6035');PA30[6061]=n('PA30_6061');
   PA30DVH[6071]=n('PA30DVH_6071');PA30DVH[6072]=n('PA30DVH_6072');PA30DVH[6073]=n('PA30DVH_6073');
   PA30PF[6055]=n('PA30PF_6055');PA30PF[6047]=n('PA30PF_6047');PA30PF[6048]=n('PA30PF_6048');PA30PF[6052]=n('PA30PF_6052');
