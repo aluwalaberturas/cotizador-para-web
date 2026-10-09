@@ -993,7 +993,7 @@ const COLORES_CARD=[
 function addCard(){
   _cards.forEach(c=>c.collapsed=true);
   const id=++_cardN;
-  _cards.push({id,linea:"modena",tipo:null,color:null,vidrio:null,opc:new Set(),ancho:null,alto:null,cantidad:1,collapsed:false});
+  _cards.push({id,linea:null,tipo:null,color:null,vidrio:null,opc:new Set(),ancho:null,alto:null,cantidad:1,collapsed:false});
   _renderCards();
   requestAnimationFrame(()=>{
     const el=document.querySelector(`[data-card-id="${id}"]`);
@@ -1063,7 +1063,7 @@ function _buildCardHTML(card,num){
 <div class="aber-header" onclick="_toggleCard(${card.id},event)" style="cursor:pointer;">
   <div style="display:flex;align-items:center;gap:16px;min-width:0;flex:1;">
     <span class="aber-num" style="white-space:nowrap;">V${num}</span>
-    <span style="font-size:12px;font-weight:600;letter-spacing:.5px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${card.linea==="modena"?"Módena Aluar":card.linea==="a30"?"A·30":"Módena"}${card.tipo?" · "+(TLBL[card.tipo]||card.tipo):""}${card.color?" · "+card.color.charAt(0).toUpperCase()+card.color.slice(1):""}${card.vidrio?" · "+(VLBL[card.vidrio]||card.vidrio):""}${card.ancho?" · "+card.ancho+"×"+card.alto+"mm":""} ×${card.cantidad}</span>
+    <span style="font-size:12px;font-weight:600;letter-spacing:.5px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${card.linea?(card.linea==="modena"?"Módena Aluar":card.linea==="a30"?"A·30":"Módena"):"Nueva abertura"}${card.tipo?" · "+(TLBL[card.tipo]||card.tipo):""}${card.color?" · "+card.color.charAt(0).toUpperCase()+card.color.slice(1):""}${card.vidrio?" · "+(VLBL[card.vidrio]||card.vidrio):""}${card.ancho?" · "+card.ancho+"×"+card.alto+"mm":""} ×${card.cantidad}</span>
   </div>
   <div style="display:flex;align-items:center;gap:10px;">
     <span style="font-size:18px;opacity:.6;transition:transform .2s;transform:rotate(${card.collapsed?"-90deg":"0deg"});">›</span>
@@ -1073,7 +1073,7 @@ function _buildCardHTML(card,num){
 <div class="aber-body" style="${card.collapsed?"display:none;":""}">
   <div class="aber-left">
     ${_cardSLBL("Línea")}<div class="linea-tabs" style="margin-bottom:22px;">${lineaTabs}</div>
-    ${_cardSLBL("Tipo")}<div class="tipo-chips" style="margin-bottom:22px;">${tipoChips}</div>
+    ${card.linea?`${_cardSLBL("Tipo")}<div class="tipo-chips" style="margin-bottom:22px;">${tipoChips}</div>`:""}
     ${card.tipo?`${_cardSLBL("Color")}<div class="color-dots" style="margin-bottom:22px;">${colorDots}</div>`:""}
     ${card.color?`${_cardSLBL("Vidrio")}<div class="vidrio-pills" style="margin-bottom:22px;">${vidrioPills}</div>`:""}
     ${card.vidrio?`
