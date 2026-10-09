@@ -1040,7 +1040,7 @@ function _cardSLBL(txt){
 function _buildCardHTML(card,num){
   const lineas=[{val:"modena",lbl:"Módena Aluar"},{val:"a30",lbl:"A·30"},{val:"modena-recuperado",lbl:"Módena"}];
   const lineaTabs=lineas.map(l=>`<button class="ltab${card.linea===l.val?" active":""}" onclick="_setLinea(${card.id},'${l.val}')">${l.lbl}</button>`).join("");
-  const tiposDisp=card.linea==="a30"?["pano","banderola","brazo","oscilobatiente","raja","corrediza","corrediza3"]:TIPOS.map(t=>t.id);
+  const tiposDisp=card.linea==="a30"?["pano","banderola","brazo","oscilobatiente","raja","corrediza","corrediza3","puerta","puertaMed"]:TIPOS.map(t=>t.id);
   const _tiposFilt=TIPOS.filter(t=>tiposDisp.includes(t.id));
   const tipoChips=_tiposFilt.map((t,i)=>{
     const imgSrc=(typeof TIMG!=="undefined"&&TIMG[t.id])?(TIMG[t.id][card.color]||TIMG[t.id].blanco||""):"";
