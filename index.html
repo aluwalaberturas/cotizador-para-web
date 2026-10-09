@@ -1088,9 +1088,14 @@ function _buildCardHTML(card,num){
     `:""}
   </div>
   <div class="aber-right">
-    <div class="tipo-badge">${card.tipo?(TLBL[card.tipo]||card.tipo):"—"}</div>
-    <div class="win-wrap" id="winWrap_${card.id}">${_buildSVG(card)}</div>
-    <div class="dims-lbl" id="dims_${card.id}">${card.ancho?card.ancho+" × "+(card.alto||"—")+" mm":"ingresá las medidas"}</div>
+    ${(()=>{
+      const hint=(msg)=>`<div style="width:100%;border:1px dashed rgba(0,0,0,.2);border-radius:6px;padding:32px 20px;text-align:center;color:var(--gray-300);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">↑ ${msg}</div>`;
+      if(!card.linea) return hint("Elegí una línea para continuar");
+      if(!card.tipo)  return hint("Elegí un tipo para continuar");
+      if(!card.color) return `<div class="tipo-badge">${TLBL[card.tipo]||card.tipo}</div>`+hint("Elegí un color para continuar");
+      if(!card.vidrio)return `<div class="tipo-badge">${TLBL[card.tipo]||card.tipo}</div><div class="win-wrap">${_buildSVG(card)}</div>`+hint("Elegí un vidrio para continuar");
+      return`<div class="tipo-badge">${TLBL[card.tipo]||card.tipo}</div><div class="win-wrap" id="winWrap_${card.id}">${_buildSVG(card)}</div><div class="dims-lbl" id="dims_${card.id}">${card.ancho?card.ancho+" × "+(card.alto||"—")+" mm":"ingresá las medidas"}</div>`;
+    })()}
   </div>
 </div>`;
 }
