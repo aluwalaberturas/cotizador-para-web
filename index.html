@@ -976,6 +976,7 @@ const COLORES_CARD=[
 ];
 let _cards=[], _cardN=0, _ventanaCount=0;
 let carrito=[];
+let _ppReady=false;
 let lineaSel=null, tipoSel=null, colorSel="blanco", vidrioSel="simple", opcionalesSel=new Set();
 
 function addCard(){
@@ -1257,6 +1258,7 @@ function _updateSVGOnly(id){
 
 function _agregarCard(id){
   const c=_getCard(id);if(!c)return;
+  if(!_ppReady){alert("Un momento, cargando precios del catálogo…");return;}
   if(!c.tipo){alert("Seleccioná el tipo de abertura.");return;}
   if(!c.color){alert("Seleccioná el color.");return;}
   if(!c.vidrio){alert("Seleccioná el tipo de vidrio.");return;}
@@ -1966,11 +1968,11 @@ fetch(PRECIOS_URL+'?t='+Date.now())
         if(el) el.value=v;
       });
     }
-    ppApply();
+    ppApply();_ppReady=true;
   })
   .catch(e=>{
     console.warn('No se pudieron cargar precios de Sheets, usando defaults',e);
-    ppApply();
+    ppApply();_ppReady=true;
   });
 if(new URLSearchParams(window.location.search).get("admin")==="aluwal2024")ppShowPass();
 </script>
