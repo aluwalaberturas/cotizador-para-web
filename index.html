@@ -976,6 +976,7 @@ const COLORES_CARD=[
 ];
 let _cards=[], _cardN=0;
 let carrito=[];
+let lineaSel=null, tipoSel=null, colorSel="blanco", vidrioSel="simple", opcionalesSel=new Set();
 
 function addCard(){
   _cards.forEach(c=>c.collapsed=true);
@@ -1044,7 +1045,7 @@ function _buildCardHTML(card,num){
   const colFilt=COLORES_CARD.filter(c=>card.linea==="modena-recuperado"?c.val==="blanco"||c.val==="negro":true);
   const colorDots=colFilt.map(c=>`<button class="cdot-btn${card.color===c.val?" active":""}" onclick="_setColor(${card.id},'${c.val}')" title="${c.lbl}"><span class="cdot" style="background:${c.css};width:22px;height:22px;display:inline-block;border-radius:50%;margin-bottom:4px;border:1px solid rgba(0,0,0,.15);"></span><span class="cname" style="display:block;font-size:8px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:inherit;">${c.lbl}</span></button>`).join("");
   const vidrioPills=[{val:"comun",lbl:"Común 4mm"},{val:"33",lbl:"Laminado 3+3"},{val:"dvh",lbl:"DVH 4+9+4"}].map(v=>`<button class="vpill${card.vidrio===v.val?" active":""}" onclick="_setVidrio(${card.id},'${v.val}')">${v.lbl}</button>`).join("");
-  const hayMosq=card.tipo&&card.tipo!=="pano"&&card.tipo!=="brazo";
+  const hayMosq=card.tipo&&card.tipo!=="pano"&&card.tipo!=="brazo"&&card.tipo!=="puerta"&&card.tipo!=="puertaMed";
   const hayBip=card.tipo==="corrediza"||card.tipo==="corrediza3"||card.tipo==="corrediza4";
   const extrasHTML=[
     hayMosq?`<label class="extra-check"><input type="checkbox"${card.opc.has("mosquitero")?" checked":""} onchange="_setOpc(${card.id},'mosquitero',this.checked)"><span>Mosquitero</span></label>`:"",
