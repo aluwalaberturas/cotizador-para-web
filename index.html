@@ -29,7 +29,7 @@ header{
   position:sticky;top:0;z-index:100;
   border-bottom:1px solid #1a1a1a;
 }
-.logo-img{height:44px;display:block;}
+.logo-img{height:60px;display:block;}
 .header-tag{
   font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
   color:var(--gray-500);border:1px solid #333;padding:6px 14px;
@@ -1073,7 +1073,8 @@ function _buildCardHTML(card,num){
 </div>
 <div class="aber-body" style="${card.collapsed?"display:none;":""}">
   <div class="aber-left">
-    ${_cardSLBL("Línea")}<div class="linea-tabs" style="margin-bottom:22px;">${lineaTabs}</div>
+    ${_cardSLBL("Línea")}<div class="linea-tabs" style="margin-bottom:${card.linea?"22px":"10px"};">${lineaTabs}</div>
+    ${!card.linea?`<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-300);margin-bottom:22px;">↑ Elegí una línea para continuar</div>`:""}
     ${card.linea?`${_cardSLBL("Tipo")}<div class="tipo-chips" style="margin-bottom:22px;">${tipoChips}</div>`:""}
     ${card.tipo?`${_cardSLBL("Color")}<div class="color-dots" style="margin-bottom:22px;">${colorDots}</div>`:""}
     ${card.color?`${_cardSLBL("Vidrio")}<div class="vidrio-pills" style="margin-bottom:22px;">${vidrioPills}</div>`:""}
@@ -1091,7 +1092,7 @@ function _buildCardHTML(card,num){
   <div class="aber-right">
     ${(()=>{
       const hint=(msg)=>`<div style="width:100%;border:1px dashed rgba(0,0,0,.2);border-radius:6px;padding:32px 20px;text-align:center;color:var(--gray-300);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">↑ ${msg}</div>`;
-      if(!card.linea) return hint("Elegí una línea para continuar");
+      if(!card.linea) return "";
       if(!card.tipo)  return hint("Elegí un tipo para continuar");
       if(!card.color) return `<div class="tipo-badge">${TLBL[card.tipo]||card.tipo}</div>`+hint("Elegí un color para continuar");
       if(!card.vidrio)return `<div class="tipo-badge">${TLBL[card.tipo]||card.tipo}</div><div class="win-wrap">${_buildSVG(card)}</div>`+hint("Elegí un vidrio para continuar");
