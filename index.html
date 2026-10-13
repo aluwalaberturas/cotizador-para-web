@@ -1391,10 +1391,10 @@ function corrediza4H(a,h){
 }
 function corrediza4HA30(a,h){
   const dvh=vidrioSel==="dvh";
-  const jb=2*(h/1000)*PA30[6036],ud=2*((a-45)/1000)*PA30[6037],enc=((h-86)/1000)*PA30[5965],tm=2*(h/1000)*P[6039];
+  const jb=2*(h/1000)*PA30[6036],ud=2*((a-45)/1000)*PA30[6037],enc=((h-86)/1000)*PA30[5965];
   const pl=4*((h-86)/1000)*(dvh?PA30DVH[6071]:PA30[6034]),pc=4*((h-86)/1000)*(dvh?PA30DVH[6072]:PA30[6035]);
   const zc=8*(a/4/1000)*PA30[6061];
-  const cA=(jb+ud+enc+tm+pl+pc+zc)*KG_A30;
+  const cA=(jb+ud+enc+pl+pc+zc)*KG_A30;
   const cV=(a/1000)*(h/1000)*VID_A30[vidrioSel];
   const mC14=4*(a/1000)+11*(h/1000),mB30=4*(a/1000)+16*(h/1000);
   const acc=T116_u*8+R47_u*8+T132_u*6+T130_u*8+T131_u*8+T118_u*8+H101_u*3+mC14*C14_P+mB30*B30_P;
