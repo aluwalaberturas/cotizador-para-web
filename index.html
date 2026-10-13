@@ -1066,7 +1066,8 @@ function _buildCardHTML(card,num){
     <span style="font-size:12px;font-weight:600;letter-spacing:.5px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${card.linea?(card.linea==="modena"?"Módena":card.linea==="a30"?"A·30":card.linea==="modena-recuperado"?"Módena Rec.":card.linea==="virgen"?"Virgen":"Módena"):"Nueva abertura"}${card.tipo?" · "+(TLBL[card.tipo]||card.tipo):""}${card.color?" · "+card.color.charAt(0).toUpperCase()+card.color.slice(1):""}${card.vidrio?" · "+(VLBL[card.vidrio]||card.vidrio):""}${card.ancho?" · "+card.ancho+"×"+card.alto+"mm":""} ×${card.cantidad}</span>
   </div>
   <div style="display:flex;align-items:center;gap:10px;">
-    ${card.inCarrito?`<span style="font-size:11px;font-weight:700;letter-spacing:.5px;color:#4ade80;background:rgba(74,222,128,.15);padding:2px 7px;border-radius:10px;">✓ En presupuesto</span>`:""}
+    ${card.inCarrito?`<span style="font-size:10px;font-weight:700;letter-spacing:.5px;color:#4ade80;background:rgba(74,222,128,.15);padding:2px 7px;border-radius:10px;white-space:nowrap;">✓ En presupuesto</span>`:""}
+    ${card.inCarrito&&card.collapsed?`<button onclick="event.stopPropagation();_editCard(${card.id})" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:var(--white);cursor:pointer;font-size:10px;font-weight:700;letter-spacing:.5px;padding:3px 10px;border-radius:8px;white-space:nowrap;">✏ Editar</button>`:""}
     <span style="font-size:18px;opacity:.6;transition:transform .2s;transform:rotate(${card.collapsed?"-90deg":"0deg"});">›</span>
     <button onclick="_removeCard(${card.id})" style="background:none;border:none;color:var(--white);cursor:pointer;font-size:16px;opacity:.7;padding:4px 8px;">✕</button>
   </div>
@@ -1214,6 +1215,8 @@ function _buildSVG(card){
 }
 
 function _toggleCard(id,e){if(e.target.closest('button'))return;const c=_getCard(id);if(!c)return;c.collapsed=!c.collapsed;_rebuildCard(id);}
+function _editCard(id){const c=_getCard(id);if(!c)return;c.collapsed=false;_rebuildCard(id);requestAnimationFrame(()=>{const el=document.querySelector(`[data-card-id="${id}"]`);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});}
+function _editFromCarrito(i){const c=_cards.find(c=>c.inCarrito&&c.carritoIdx===i);if(c)_editCard(c.id);}
 function _setLinea(id,val){const c=_getCard(id);if(!c)return;c.linea=val;c.tipo=null;c.color=null;c.vidrio=null;_rebuildCard(id);}
 function _setTipo(id,val){const c=_getCard(id);if(!c)return;c.tipo=val;c.color=null;c.vidrio=null;_rebuildCard(id);}
 function _setColor(id,val){const c=_getCard(id);if(!c)return;c.color=val;c.vidrio=null;_rebuildCard(id);}
@@ -1262,7 +1265,7 @@ function _agregarCard(id){
   lineaSel=c.linea;tipoSel=c.tipo;colorSel=c.color;vidrioSel=c.vidrio;opcionalesSel=c.opc;
   const pu=calc(c.ancho,c.alto);
   lineaSel=prevL;tipoSel=prevT;colorSel=prevC;vidrioSel=prevV;opcionalesSel=prevO;
-  const item={tipo:c.tipo,linea:c.linea,ancho:c.ancho,alto:c.alto,cantidad:c.cantidad,color:c.color,vidrio:c.vidrio,precioUnit:pu,precioTotal:pu*c.cantidad};
+  const item={tipo:c.tipo,linea:c.linea,ancho:c.ancho,alto:c.alto,cantidad:c.cantidad,color:c.color,vidrio:c.vidrio,precioUnit:pu,precioTotal:pu*c.cantidad,cardId:id};
   if(c.inCarrito){
     carrito[c.carritoIdx]=item;
   }else{
@@ -1527,7 +1530,8 @@ function renderCarrito(){
       ?`<img src="${imgSrc}" style="width:${iw}px;height:${ih}px;object-fit:contain;display:block;">`
       :`<svg viewBox="0 0 ${iw+14} ${ih+14}" width="${iw+14}" height="${ih+14}" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="${iw+6}" height="${ih+6}" fill="none" stroke="${CSVG[it.color]}" stroke-width="6"/><rect x="8" y="8" width="${iw-2}" height="${ih-2}" fill="#e8e8e8" opacity="0.9"/></svg>`;
     const d=document.createElement("div");d.className="ventana-item";
-    d.innerHTML=`<button class="btn-remove" onclick="quitarItem(${i})">✕</button>${it.cantidad>1?`<div class="win-qty">${it.cantidad}</div>`:""}${imgHtml}<div class="win-label">${it.ancho}×${it.alto}mm<br>${TLBL[it.tipo]} · ${it.color}<br>${VLBL[it.vidrio]}</div><div class="win-precio">$${fmt(it.precioTotal)}</div>`;
+    d.innerHTML=`<button class="btn-remove" onclick="quitarItem(${i})">✕</button>${it.cantidad>1?`<div class="win-qty">${it.cantidad}</div>`:""}${imgHtml}<div class="win-label">${it.ancho}×${it.alto}mm<br>${TLBL[it.tipo]} · ${it.color}<br>${VLBL[it.vidrio]}</div><div class="win-precio">$${fmt(it.precioTotal)}</div>${it.cardId!==undefined?`<button onclick="_editFromCarrito(${i})" style="position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:9px;font-weight:700;letter-spacing:.5px;padding:2px 7px;border-radius:6px;cursor:pointer;">✏ editar</button>`:""}`;
+    d.style.position='relative';
     g.appendChild(d);
   });
   const tot=carrito.reduce((s,it)=>s+it.precioTotal,0);
@@ -1536,7 +1540,16 @@ function renderCarrito(){
   if(carrito.length>0){w.classList.add("show");setTimeout(()=>w.scrollIntoView({behavior:"smooth",block:"nearest"}),50);}
   else w.classList.remove("show");
 }
-function quitarItem(i){carrito.splice(i,1);renderCarrito();}
+function quitarItem(i){
+  const removed=carrito[i];
+  if(removed&&removed.cardId!==undefined){
+    const c=_getCard(removed.cardId);
+    if(c){c.inCarrito=false;c.carritoIdx=undefined;_rebuildCard(c.id);}
+  }
+  carrito.splice(i,1);
+  _cards.forEach(c=>{if(c.inCarrito&&c.carritoIdx>i)c.carritoIdx--;});
+  renderCarrito();
+}
 function limpiarCarrito(){carrito=[];renderCarrito();}
 function enviarAlInterno(){
   if(carrito.length===0){alert('Agregá productos al presupuesto primero');return;}
