@@ -1430,7 +1430,7 @@ function puertaMedMod(a,h){
   const cA=(marco+hoja+cv+rev)*KG;
   const hp=((a-39)+2*(h-25))/1000;
   const clips=Math.round(cvl*1000/224);
-  const acc=E69_u*2+E70_u*2+H51_u+H50_u+H82H1065_u*3+E80_u*2+T96_u*50+hp*(B67+B79)+cvl*B31_P;
+  const acc=E69_u*2+E70_u*2+H51_u+H50_u+H82H1065_u*3+E80_u*2+T96_u*50+hp*(B67+B79)+4*(a+h)/1000*B31_P;
   const cm=opcionalesSel.has('contramarco')?((a+54)+2*(h+27))/1000*P[6206]*KG*(1+MRG):0;
   return(cA+(a-194)/1000*(h/2/1000)*VID[vidrioSel]+acc)*(1+MRG)+cm+premarcoExtra(a,h,KG);
 }
