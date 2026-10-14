@@ -1699,6 +1699,7 @@ function descargarPDF(nroOrden,nombre,apellido){
   _pov.style.cssText='position:fixed;inset:0;z-index:99999;background:#fff;overflow:auto;';
   _pov.innerHTML=html;
   document.body.appendChild(_pov);
+  _pov.scrollTop=0;
   const _style=document.createElement('style');
   _style.id='_printStyle';
   _style.textContent='@media print{body>*:not(#_printOv){display:none!important;}#_printOv{position:static!important;}}';
