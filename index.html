@@ -1694,23 +1694,11 @@ function descargarPDF(nroOrden,nombre,apellido){
   </div>
   <div class="nota">Demora de producción 10/15 días hábiles.<br>Los precios son estimativos y pueden tener alguna pequeña variación.</div>
   </div></body></html>`;
-  const _pov=document.createElement('div');
-  _pov.id='_printOv';
-  _pov.style.cssText='position:fixed;inset:0;z-index:99999;background:#fff;overflow:auto;';
-  _pov.innerHTML=html;
-  document.body.appendChild(_pov);
-  _pov.scrollTop=0;
-  const _style=document.createElement('style');
-  _style.id='_printStyle';
-  _style.textContent='@media print{body>*:not(#_printOv){display:none!important;}#_printOv{position:static!important;}}';
-  document.head.appendChild(_style);
-  setTimeout(function(){
-    window.print();
-    setTimeout(function(){
-      document.body.removeChild(_pov);
-      document.head.removeChild(_style);
-    },500);
-  },300);
+  const w=window.open("","_blank");
+  if(!w){alert("Por favor permitir popups para este sitio y volver a intentar.");return;}
+  w.document.write(html);
+  w.document.close();
+  w.print();
 }
 // ============================================================
 // PANEL DE PRECIOS — JS INTERNO (BORRAR ANTES DE SUBIR A LA WEB)
