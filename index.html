@@ -1968,6 +1968,9 @@ fetch(PRECIOS_URL+'?t='+Date.now())
         const el=document.getElementById('pp_'+k);
         if(el) el.value=v;
       });
+      // Forzar precios correctos que el Sheet tiene desactualizados
+      const _h103=document.getElementById('pp_H103_u');if(_h103)_h103.value=18000;
+      const _b52=document.getElementById('pp_B52_P');if(_b52)_b52.value=450;
     }
     ppApply();_ppReady=true;
   })
