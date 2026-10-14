@@ -1698,13 +1698,7 @@ function descargarPDF(nroOrden,nombre,apellido){
   if(!w){alert("Por favor permitir popups para este sitio y volver a intentar.");return;}
   w.document.write(html);
   w.document.close();
-  const _s=w.document.createElement('script');
-  _s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-  _s.onload=function(){
-    const _fn='Presupuesto_Aluwal'+(nroOrden?'_'+nroOrden:'')+'_'+fecha.split('/').join('-')+'.pdf';
-    w.html2pdf().set({margin:8,filename:_fn,image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,logging:false},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(w.document.body).save().then(function(){w.close();});
-  };
-  w.document.head.appendChild(_s);
+  w.print();
 }
 // ============================================================
 // PANEL DE PRECIOS — JS INTERNO (BORRAR ANTES DE SUBIR A LA WEB)
