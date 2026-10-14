@@ -1316,7 +1316,7 @@ function brazoA30(a,h){
   const cV=(a/1000)*(h/1000)*VID_A30[vidrioSel];
   // Accesorios: fijos + B74 perimetro + B31 doble perimetro
   const per=2*(a+h)/1000;
-  const acc=T96_u*Math.round(2*(a+h)/80)+E83_u*8+T131_u*2+H61_u*2+H16H63_u+per*B74_P+per*2*B31_P;
+  const acc=T96_u*Math.max(30,Math.round(2*(a+h)/173))+E83_u*8+T131_u*2+H61_u*2+H16H63_u+per*B74_P+per*2*B31_P;
   return(cA+cV+acc)*(1+MRG)+contramarcoExtra(a,h,KG_A30)+premarcoExtra(a,h,KG_A30);
 }
 function banderolaA30(a,h){
