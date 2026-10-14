@@ -837,14 +837,16 @@ function mosquiteroExtra(a,h,kg){
 }
 function contramarcoExtra(a,h,kg){
   if(!opcionalesSel.has('contramarco'))return 0;
-  const metros=lineaSel==='a30'?2*(a+h)/1000:(2*(a+54)+2*(h+54))/1000;
+  const isDoor=tipoSel==='puerta'||tipoSel==='puertaMed';
+  const metros=lineaSel==='a30'?(isDoor?(a+56+2*(h+28))/1000:2*(a+h)/1000):(2*(a+54)+2*(h+54))/1000;
   return metros*P[6206]*kg*(1+MRG);
 }
 function premarcoExtra(a,h,kg){
   if(!opcionalesSel.has('premarco'))return 0;
   if(lineaSel==='a30'){
-    const metros=2*(a+h)/1000;
-    const pcs=2*Math.max(3,Math.ceil(a/500))+2*Math.max(3,Math.ceil(h/500));
+    const isDoor=tipoSel==='puerta'||tipoSel==='puertaMed';
+    const metros=isDoor?(2*(a+35)+2*(h+35))/1000:2*(a+h)/1000;
+    const pcs=isDoor?2*Math.max(3,Math.ceil(a/750))+2*Math.max(3,Math.ceil(h/750)):2*Math.max(3,Math.ceil(a/500))+2*Math.max(3,Math.ceil(h/500));
     const acc_f=E78_u*4+S9_u*pcs+T88_u*pcs;
     return(metros*P[6066]*kg+acc_f)*(1+MRG);
   }
@@ -953,7 +955,7 @@ let B68m_P=700;      // Burlete exterior batiente puerta /m (distinto de B68_P A
 // Puertas rebatibles — A30
 let H103_u=18000;    // Bisagra de aplicar 2 piezas A30 × 3
 let H93_u=15000;     // Manija doble balancín puerta A30 × 1
-let B52_P=700;       // Burlete interior doble contacto A30 puerta /m
+let B52_P=450;       // Burlete interior doble contacto A30 puerta /m
 const C2H={T89:35,T90:80,T91:100,T144:1500,T130:50,H54:3300,R40:1400,R42:2700,I:5,C2m:60,B32m:1000};
 let B67=500,B79=370,B31=775;
 const TIMG={
@@ -1443,10 +1445,10 @@ function puertaA30(a,h){
   const cvl=dvh?4*(a+h)/1000:2*(a+h)/1000;
   const cv=dvh?cvl*PA30PF[6048]:cvl*(PA30[6050]+PA30PF[6047]);
   const cA=(marco+hoja+cv)*KG_A30;
-  const hp=((a-74)+2*(h-42))/1000;
-  const clips=Math.round(cvl*1000/142);
-  const c14L=2*(a-74)/1000;
-  const acc=E70_u*4+H51_u+H93_u+H103_u*3+E80_u*2+T96_u*clips+c14L*C14_P+hp*(B52_P+B67)+cvl*B31_P;
+  const hp=(a+2*h)/1000;
+  const clips=Math.round(cvl*1000/142)*2;
+  const c14L=2*a/1000;
+  const acc=E70_u*4+H51_u+H93_u+H103_u*3+E80_u*2+T96_u*clips+c14L*C14_P+hp*(B52_P+B67)+cvl*2*B31_P;
   return(cA+(a-232)/1000*(h/1000)*VID_A30[vidrioSel]+acc)*(1+MRG)+contramarcoExtra(a,h,KG_A30)+premarcoExtra(a,h,KG_A30);
 }
 function puertaMedA30(a,h){
@@ -1459,10 +1461,10 @@ function puertaMedA30(a,h){
   const cv=dvh?cvl*PA30PF[6048]:cvl*(PA30[6050]+PA30PF[6047]);
   const rev=Math.ceil(h/240)*(a-232)/1000*P[5726];
   const cA=(marco+hoja+cv+rev)*KG_A30;
-  const hp=((a-74)+2*(h-42))/1000;
-  const clips=Math.round(cvl*1000/142);
-  const c14L=2*(a-74)/1000;
-  const acc=E70_u*4+H51_u+H93_u+H103_u*3+E80_u*2+T96_u*clips+c14L*C14_P+hp*(B52_P+B67)+cvl*B31_P;
+  const hp=(a+2*h)/1000;
+  const clips=Math.round(cvl*1000/142)*2;
+  const c14L=2*a/1000;
+  const acc=E70_u*4+H51_u+H93_u+H103_u*3+E80_u*2+T96_u*clips+c14L*C14_P+hp*(B52_P+B67)+cvl*2*B31_P;
   return(cA+(a-232)/1000*(h/2/1000)*VID_A30[vidrioSel]+acc)*(1+MRG)+contramarcoExtra(a,h,KG_A30)+premarcoExtra(a,h,KG_A30);
 }
 
@@ -1728,7 +1730,7 @@ const PP_ORIG={
   H45_u:66000,H45F_u:22000,H43_u:1900,H48_u:400,H44_u:190,H79_u:290,
   BIPUNTO_MOD:55000,BIPUNTO_A30:70000,
   E70_u:1600,H51_u:35000,H50_u:15000,H82H1065_u:9000,E80_u:1000,B68m_P:700,
-  H103_u:18000,H93_u:15000,B52_P:700,
+  H103_u:18000,H93_u:15000,B52_P:450,
   P6214:1.088,P6219:1.647,P6218:1.150,P6232:0.181,P5726:0.907,
   PA30_6040:1.193,PA30_6041:1.388,PA30_6043:2.320,PA30_6042:1.399,PA30_6050:0.192
 };
