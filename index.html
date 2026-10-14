@@ -176,7 +176,7 @@ header{
   display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
 }
 .total-lbl{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gray-500);margin-bottom:6px;font-weight:600;}
-.total-num{font-size:56px;font-weight:900;color:var(--white);letter-spacing:-2px;line-height:1;}
+.total-num{font-size:clamp(28px,10vw,56px);font-weight:900;color:var(--white);letter-spacing:-2px;line-height:1;white-space:nowrap;}
 .total-num .signo{font-size:28px;opacity:.5;margin-right:4px;font-weight:300;}
 .btn-clear{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.5);padding:10px 20px;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .15s;font-weight:600;}
 .btn-clear:hover{color:var(--white);border-color:var(--white);background:rgba(255,255,255,0.1);}
