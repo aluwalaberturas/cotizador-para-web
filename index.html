@@ -1078,7 +1078,8 @@ function _buildCardHTML(card,num){
   <div class="aber-left">
     ${_cardSLBL("Línea")}<div class="linea-tabs" style="margin-bottom:${card.linea?"22px":"10px"};">${lineaTabs}</div>
     ${!card.linea?`<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-300);margin-bottom:22px;">↑ Elegí una línea para continuar</div>`:""}
-    ${card.linea?`${_cardSLBL("Color")}<div class="color-dots" style="margin-bottom:22px;">${colorDots}</div>`:""}
+    ${card.linea?`${_cardSLBL("Color")}<div class="color-dots" style="margin-bottom:${card.color?"22px":"10px"};">${colorDots}</div>`:""}
+    ${card.linea&&!card.color?`<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-300);margin-bottom:22px;">↑ Elegí un color para continuar</div>`:""}
     ${card.color?`${_cardSLBL("Tipo")}<div class="tipo-chips" style="margin-bottom:22px;">${tipoChips}</div>`:""}
     ${card.tipo?`${_cardSLBL("Vidrio")}<div class="vidrio-pills" style="margin-bottom:22px;">${vidrioPills}</div>`:""}
     ${card.vidrio?`
@@ -1096,7 +1097,7 @@ function _buildCardHTML(card,num){
     ${(()=>{
       const hint=(msg)=>`<div style="width:100%;border:1px dashed rgba(0,0,0,.2);border-radius:6px;padding:32px 20px;text-align:center;color:var(--gray-300);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">↑ ${msg}</div>`;
       if(!card.linea) return "";
-      if(!card.color) return hint("Elegí un color para continuar");
+      if(!card.color) return "";
       if(!card.tipo)  return hint("Elegí un tipo para continuar");
       if(!card.vidrio)return `<div class="tipo-badge">${TLBL[card.tipo]||card.tipo}</div><div class="win-wrap">${_buildSVG(card)}</div>`+hint("Elegí un vidrio para continuar");
       return`<div class="tipo-badge">${TLBL[card.tipo]||card.tipo}</div><div class="win-wrap" id="winWrap_${card.id}">${_buildSVG(card)}</div><div class="dims-lbl" id="dims_${card.id}">${card.ancho?card.ancho+" × "+(card.alto||"—")+" mm":"ingresá las medidas"}</div>`;
