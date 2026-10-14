@@ -845,7 +845,7 @@ function premarcoExtra(a,h,kg){
   if(!opcionalesSel.has('premarco'))return 0;
   if(lineaSel==='a30'){
     const metros=(2*(a+35)+2*(h+35))/1000;
-    const pcs=2*Math.ceil(a/500)+2*Math.ceil(h/500);
+    const pcs=2*Math.max(3,Math.ceil(a/500))+2*Math.max(3,Math.ceil(h/500));
     const acc_f=E78_u*4+S9_u*pcs+T88_u*pcs;
     return(metros*P[6066]*kg+acc_f)*(1+MRG);
   }
