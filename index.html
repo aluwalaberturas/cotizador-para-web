@@ -1082,7 +1082,8 @@ function _buildCardHTML(card,num){
     ${card.linea&&!card.color?`<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-300);margin-bottom:22px;">↑ Elegí un color para continuar</div>`:""}
     ${card.color?`${_cardSLBL("Tipo")}<div class="tipo-chips" style="margin-bottom:${card.tipo?"22px":"10px"};">${tipoChips}</div>`:""}
     ${card.color&&!card.tipo?`<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-300);margin-bottom:22px;">↑ Elegí un tipo para continuar</div>`:""}
-    ${card.tipo?`${_cardSLBL("Vidrio")}<div class="vidrio-pills" style="margin-bottom:22px;">${vidrioPills}</div>`:""}
+    ${card.tipo?`${_cardSLBL("Vidrio")}<div class="vidrio-pills" style="margin-bottom:${card.vidrio?"22px":"10px"};">${vidrioPills}</div>`:""}
+    ${card.tipo&&!card.vidrio?`<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-300);margin-bottom:22px;">↑ Elegí un vidrio para continuar</div>`:""}
     ${card.vidrio?`
     ${_cardSLBL("Medidas")}
     <div class="cf-row" style="margin-bottom:22px;">
@@ -1100,7 +1101,7 @@ function _buildCardHTML(card,num){
       if(!card.linea) return "";
       if(!card.color) return "";
       if(!card.tipo)  return "";
-      if(!card.vidrio)return `<div class="tipo-badge">${TLBL[card.tipo]||card.tipo}</div><div class="win-wrap">${_buildSVG(card)}</div>`+hint("Elegí un vidrio para continuar");
+      if(!card.vidrio)return `<div class="tipo-badge">${TLBL[card.tipo]||card.tipo}</div><div class="win-wrap">${_buildSVG(card)}</div>`;
       return`<div class="tipo-badge">${TLBL[card.tipo]||card.tipo}</div><div class="win-wrap" id="winWrap_${card.id}">${_buildSVG(card)}</div><div class="dims-lbl" id="dims_${card.id}">${card.ancho?card.ancho+" × "+(card.alto||"—")+" mm":"ingresá las medidas"}</div>`;
     })()}
   </div>
