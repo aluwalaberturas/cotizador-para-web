@@ -975,7 +975,7 @@ const COLORES_CARD=[
   {val:"anodizado",lbl:"Anodizado",css:"linear-gradient(135deg,#999,#ccc)"},
   {val:"similmadera",lbl:"Similmadera",css:"linear-gradient(135deg,#8B5E3C,#C49A6C)"}
 ];
-let _cards=[], _cardN=0, _ventanaCount=0;
+let _cards=[], _cardN=0, _ventanaCount=0, _useCm=false;
 let carrito=[];
 let _ppReady=false;
 let lineaSel=null, tipoSel=null, colorSel="blanco", vidrioSel="simple", opcionalesSel=new Set();
@@ -1085,11 +1085,18 @@ function _buildCardHTML(card,num){
     ${card.tipo?`${_cardSLBL("Vidrio")}<div class="vidrio-pills" style="margin-bottom:${card.vidrio?"22px":"10px"};">${vidrioPills}</div>`:""}
     ${card.tipo&&!card.vidrio?`<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray-300);margin-bottom:22px;">↑ Elegí un vidrio para continuar</div>`:""}
     ${card.vidrio?`
-    ${_cardSLBL("Medidas")}
-    <div class="cf-row" style="margin-bottom:22px;">
-      <div class="cf-field"><div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;">Ancho (mm)</div><input type="number" min="300" max="3500" placeholder="ej: 1200" value="${card.ancho||""}" oninput="_setAncho(${card.id},this.value)"></div>
-      <div class="cf-field"><div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;">Alto (mm)</div><input type="number" min="300" max="${card.linea==="a30"?2500:2300}" placeholder="ej: 1000" value="${card.alto||""}" oninput="_setAlto(${card.id},this.value)"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#888;">Medidas</div>
+      <div style="display:flex;gap:0;border:1px solid #ddd;border-radius:4px;overflow:hidden;">
+        <button onclick="_toggleUnit(false)" style="padding:3px 10px;font-size:10px;font-weight:700;letter-spacing:.5px;border:none;cursor:pointer;background:${_useCm?"#f5f5f5":"#111"};color:${_useCm?"#888":"#fff"};">MM</button>
+        <button onclick="_toggleUnit(true)" style="padding:3px 10px;font-size:10px;font-weight:700;letter-spacing:.5px;border:none;cursor:pointer;background:${_useCm?"#111":"#f5f5f5"};color:${_useCm?"#fff":"#888"};">CM</button>
+      </div>
     </div>
+    <div class="cf-row" style="margin-bottom:22px;">
+      <div class="cf-field"><div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;">Ancho (${_useCm?"cm":"mm"})</div><input type="number" min="${_useCm?30:300}" max="${_useCm?350:3500}" step="${_useCm?0.1:1}" placeholder="${_useCm?"ej: 120":"ej: 1200"}" value="${card.ancho?(_useCm?Math.round(card.ancho/10*10)/10:card.ancho):""}" oninput="_setAncho(${card.id},_useCm?Math.round(this.value*10):+this.value)"></div>
+      <div class="cf-field"><div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;">Alto (${_useCm?"cm":"mm"})</div><input type="number" min="${_useCm?30:300}" max="${_useCm?(card.linea==="a30"?250:230):(card.linea==="a30"?2500:2300)}" step="${_useCm?0.1:1}" placeholder="${_useCm?"ej: 100":"ej: 1000"}" value="${card.alto?(_useCm?Math.round(card.alto/10*10)/10:card.alto):""}" oninput="_setAlto(${card.id},_useCm?Math.round(this.value*10):+this.value)"></div>
+    </div>
+    <div style="font-size:10px;color:#aaa;letter-spacing:.5px;margin-top:-16px;margin-bottom:22px;">Las medidas están expresadas en ${_useCm?"centímetros (cm)":"milímetros (mm)"}.</div>
     ${_cardSLBL("Cantidad")}<div class="qty-ctrl" style="margin-bottom:22px;"><button onclick="_setQty(${card.id},-1)">−</button><span class="qty-val" id="qty_${card.id}">${card.cantidad}</span><button onclick="_setQty(${card.id},+1)">+</button></div>
     ${_cardSLBL("Extras")}<div class="extras-grid" style="margin-bottom:22px;">${extrasHTML}</div>
     <button class="btn-agregar" onclick="_agregarCard(${card.id})">${card.inCarrito?"Actualizar presupuesto →":"Agregar al presupuesto →"}</button>
@@ -1225,6 +1232,7 @@ function _editFromCarrito(i){const c=_cards.find(c=>c.inCarrito&&c.carritoIdx===
 function _setLinea(id,val){const c=_getCard(id);if(!c)return;c.linea=val;c.color=null;c.tipo=null;c.vidrio=null;_rebuildCard(id);}
 function _setColor(id,val){const c=_getCard(id);if(!c)return;c.color=val;c.tipo=null;c.vidrio=null;_rebuildCard(id);}
 function _setTipo(id,val){const c=_getCard(id);if(!c)return;c.tipo=val;c.vidrio=null;_rebuildCard(id);}
+function _toggleUnit(cm){_useCm=cm;_renderCards();}
 function _setVidrio(id,val){const c=_getCard(id);if(!c)return;c.vidrio=val;_rebuildCard(id);}
 function _setAncho(id,val){
   const c=_getCard(id);if(!c)return;
