@@ -1570,7 +1570,7 @@ function enviarAlInterno(){
   btn.textContent='✅ Enviado!';
   setTimeout(()=>{btn.textContent='→ Presupuesto interno';},2000);
 }
-if(window.parent!==window)document.getElementById('btnEnviarInterno').style.display='';
+if(window.parent!==window&&new URLSearchParams(window.location.search).get('interno')==='1')document.getElementById('btnEnviarInterno').style.display='';
 
 function actualizarPreview(){}
 function abrirModal(){
