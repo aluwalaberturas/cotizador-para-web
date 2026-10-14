@@ -1498,6 +1498,7 @@ function patagonicaMod(a,h){
 }
 
 function calc(a,h){
+  resolvePrecios();
   if(lineaSel==="a30"){
     if(tipoSel==="pano")return panoA30(a,h);
     if(tipoSel==="banderola")return banderolaA30(a,h);
@@ -1512,7 +1513,6 @@ function calc(a,h){
     if(tipoSel==="puertaMed")return puertaMedA30(a,h);
     return 0;
   }
-  resolvePrecios();
   if(lineaSel==="modena-recuperado"){const s=KG;KG=KG_REC;const r2=tipoSel==="pano"?pano(a,h):tipoSel==="corrediza"?corrediza(a,h):tipoSel==="corrediza3"?corrediza3G(a,h):tipoSel==="corrediza4"?corrediza4H(a,h):tipoSel==="banderola"?banderola(a,h):tipoSel==="brazo"?brazo(a,h):tipoSel==="oscilobatiente"?oscilo(a,h):tipoSel==="raja"?raja(a,h):tipoSel==="patagonica"?patagonicaMod(a,h):tipoSel==="puerta"?puertaMod(a,h):tipoSel==="puertaMed"?puertaMedMod(a,h):0;KG=s;return r2;}
   if(tipoSel==="pano")return pano(a,h);if(tipoSel==="corrediza")return corrediza(a,h);if(tipoSel==="corrediza3")return corrediza3G(a,h);if(tipoSel==="corrediza4")return corrediza4H(a,h);if(tipoSel==="banderola")return banderola(a,h);if(tipoSel==="brazo")return brazo(a,h);if(tipoSel==="oscilobatiente")return oscilo(a,h);if(tipoSel==="raja")return raja(a,h);if(tipoSel==="patagonica")return patagonicaMod(a,h);if(tipoSel==="puerta")return puertaMod(a,h);if(tipoSel==="puertaMed")return puertaMedMod(a,h);return 0;
 }
