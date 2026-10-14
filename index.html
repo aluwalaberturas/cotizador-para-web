@@ -1330,7 +1330,7 @@ function banderolaA30(a,h){
   const cV=(a/1000)*(h/1000)*VID_A30[vidrioSel];
   // Accesorios: fijos + burletes perimetro (iguales para todos)
   const per=2*(a+h)/1000;
-  const acc=T96_u*Math.round(2*(a+h)/96)+E83_u*8+T131_u*2+H61_u*2+H52_u+H87_u+per*(B74_P+B31_P);
+  const acc=T96_u*Math.round(2*(a+h)/208)+E83_u*8+T131_u*2+H61_u*2+H52_u+H87_u+per*(B74_P+B31_P);
   return(cA+cV+acc)*(1+MRG)+mosquiteroExtra(a,h,KG_A30)+contramarcoExtra(a,h,KG_A30)+premarcoExtra(a,h,KG_A30);
 }
 function panoA30(a,h){
