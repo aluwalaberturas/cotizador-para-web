@@ -837,14 +837,13 @@ function mosquiteroExtra(a,h,kg){
 }
 function contramarcoExtra(a,h,kg){
   if(!opcionalesSel.has('contramarco'))return 0;
-  const offset=lineaSel==='a30'?56:54;
-  const metros=(2*(a+offset)+2*(h+offset))/1000;
+  const metros=lineaSel==='a30'?2*(a+h)/1000:(2*(a+54)+2*(h+54))/1000;
   return metros*P[6206]*kg*(1+MRG);
 }
 function premarcoExtra(a,h,kg){
   if(!opcionalesSel.has('premarco'))return 0;
   if(lineaSel==='a30'){
-    const metros=(2*(a+35)+2*(h+35))/1000;
+    const metros=2*(a+h)/1000;
     const pcs=2*Math.max(3,Math.ceil(a/500))+2*Math.max(3,Math.ceil(h/500));
     const acc_f=E78_u*4+S9_u*pcs+T88_u*pcs;
     return(metros*P[6066]*kg+acc_f)*(1+MRG);
@@ -1476,7 +1475,7 @@ function patagonicaA30(a,h){
   const acople=(h/1000)*PA30PF[6067];
   const cCV=pr*(dvh?PA30PF[6048]:PA30PF[6047]);
   const cA=(marco+hoja+acople+cCV)*KG_A30;
-  const cV=(a/1000)*(h/1000)*VID_A30[vidrioSel];
+  const cV=(h/1000)*((a-64)/1000)*VID_A30[vidrioSel];
   const clips=Math.round(pr*1000/123);
   const mB74=2*(a_r+h)/1000,mB68=2*(a_p+h)/1000,mB31=pr;
   const acc=T96_u*clips+E83_u*12+T131_u*3+H47_u+H61_u*2+mB74*B74_P+mB31*B31_P+mB68*(B68_P+B69_P);
