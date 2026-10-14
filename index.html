@@ -1463,7 +1463,7 @@ function puertaMedA30(a,h){
   const rev=Math.ceil(h/240)*(a-232)/1000*P[5726];
   const cA=(marco+hoja+cv+rev)*KG_A30;
   const hp=(a+2*h)/1000;
-  const cvRef=dvh?cvl:cvl*2;
+  const cvRef=dvh?cvBase:cvBase*2;  // clips y B31 usan marco principal, no el travesaño
   const clips=Math.round(cvRef*1000/142);
   const c14L=2*a/1000;
   const acc=E70_u*4+H51_u+H93_u+H103_u*3+E80_u*2+T96_u*clips+c14L*C14_P+hp*(B52_P+B67)+cvRef*B31_P;
