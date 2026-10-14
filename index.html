@@ -1100,7 +1100,6 @@ function _buildCardHTML(card,num){
     ${_cardSLBL("Cantidad")}<div class="qty-ctrl" style="margin-bottom:22px;"><button onclick="_setQty(${card.id},-1)">−</button><span class="qty-val" id="qty_${card.id}">${card.cantidad}</span><button onclick="_setQty(${card.id},+1)">+</button></div>
     ${_cardSLBL("Extras")}<div class="extras-grid" style="margin-bottom:22px;">${extrasHTML}</div>
     <button class="btn-agregar" onclick="_agregarCard(${card.id})">${card.inCarrito?"Actualizar presupuesto →":"Agregar al presupuesto →"}</button>
-    `:""}
   </div>
   <div class="aber-right">
     ${(()=>{
