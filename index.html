@@ -1446,9 +1446,10 @@ function puertaA30(a,h){
   const cv=dvh?cvl*PA30PF[6048]:cvl*(PA30[6050]+PA30PF[6047]);
   const cA=(marco+hoja+cv)*KG_A30;
   const hp=(a+2*h)/1000;
-  const clips=Math.round(cvl*1000/142)*2;
+  const cvRef=dvh?cvl:cvl*2;  // DVH: cvl ya incluye ambos contravidrios; simple: *2
+  const clips=Math.round(cvRef*1000/142);
   const c14L=2*a/1000;
-  const acc=E70_u*4+H51_u+H93_u+H103_u*3+E80_u*2+T96_u*clips+c14L*C14_P+hp*(B52_P+B67)+cvl*2*B31_P;
+  const acc=E70_u*4+H51_u+H93_u+H103_u*3+E80_u*2+T96_u*clips+c14L*C14_P+hp*(B52_P+B67)+cvRef*B31_P;
   return(cA+(a-232)/1000*(h/1000)*VID_A30[vidrioSel]+acc)*(1+MRG)+contramarcoExtra(a,h,KG_A30)+premarcoExtra(a,h,KG_A30);
 }
 function puertaMedA30(a,h){
@@ -1462,9 +1463,10 @@ function puertaMedA30(a,h){
   const rev=Math.ceil(h/240)*(a-232)/1000*P[5726];
   const cA=(marco+hoja+cv+rev)*KG_A30;
   const hp=(a+2*h)/1000;
-  const clips=Math.round(cvl*1000/142)*2;
+  const cvRef=dvh?cvl:cvl*2;
+  const clips=Math.round(cvRef*1000/142);
   const c14L=2*a/1000;
-  const acc=E70_u*4+H51_u+H93_u+H103_u*3+E80_u*2+T96_u*clips+c14L*C14_P+hp*(B52_P+B67)+cvl*2*B31_P;
+  const acc=E70_u*4+H51_u+H93_u+H103_u*3+E80_u*2+T96_u*clips+c14L*C14_P+hp*(B52_P+B67)+cvRef*B31_P;
   return(cA+(a-232)/1000*(h/2/1000)*VID_A30[vidrioSel]+acc)*(1+MRG)+contramarcoExtra(a,h,KG_A30)+premarcoExtra(a,h,KG_A30);
 }
 
