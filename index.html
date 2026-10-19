@@ -272,6 +272,10 @@ header{
   .config-grid,.linea-grid{grid-template-columns:1fr;}
   .tipo-grid{grid-template-columns:repeat(2,1fr);}
   .tipo-ghost{display:none;}
+  .aber-body{grid-template-columns:minmax(0,1fr);}
+  .aber-header{padding:14px 18px;}
+  .aber-left,.aber-right{padding:22px 18px;}
+  .aber-right:not(:has(*)){display:none;}
 }
 </style>
 </head>
@@ -428,7 +432,7 @@ header{
       <div class="ventanas-grid" id="ventanasGrid"></div>
       <div class="total-bar">
         <div>
-          <div class="total-lbl">Total estimado sin IVA</div>
+          <div class="total-lbl">Total estimado</div>
           <div class="total-num"><span class="signo">$</span><span id="totalPrecio">0</span></div>
         </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
@@ -1697,7 +1701,7 @@ function descargarPDF(nroOrden,nombre,apellido){
     <tbody>${rows}</tbody>
   </table>
   <div class="total-box">
-    <div><div class="total-lbl">Total estimado sin IVA</div><div class="total-num">$${fmt(tot)}</div></div>
+    <div><div class="total-lbl">Total estimado</div><div class="total-num">$${fmt(tot)}</div></div>
     <div style="font-size:11px;opacity:.5;letter-spacing:1px;">ALUWAL · aluwalaberturas.com</div>
   </div>
   <div class="nota">Demora de producción 10/15 días hábiles · Símil madera: consultar tiempo de producción.<br>Los precios son estimativos y pueden tener alguna pequeña variación.</div>
