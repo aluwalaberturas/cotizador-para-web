@@ -1009,7 +1009,12 @@ const COLORES_CARD=[
 ];
 let _cards=[], _cardN=0, _ventanaCount=0, _useCm=false;
 let carrito=[];
-let _cliNombre='', _cliCelular='';
+let _cliNombre='', _cliCelular='', _nroOrden=null;
+
+async function _getOrden(){
+  if(!_nroOrden) _nroOrden=await generarNroOrden();
+  return _nroOrden;
+}
 
 function confirmarGate(){
   const nombre=document.getElementById('gate_nombre').value.trim();
@@ -1672,7 +1677,7 @@ async function confirmarPedido(){
   const textoOriginal=btnConfirmar?btnConfirmar.textContent:"";
   if(btnConfirmar){btnConfirmar.disabled=true;btnConfirmar.textContent="Registrando...";}
 
-  const nroOrden=await generarNroOrden();
+  const nroOrden=await _getOrden();
 
   if(!nroOrden){
     if(btnConfirmar){btnConfirmar.disabled=false;btnConfirmar.textContent=textoOriginal;}
@@ -1701,7 +1706,7 @@ async function enviarWhatsApp(){
   if(carrito.length===0){alert('Agregá productos al presupuesto primero');return;}
   const btn=document.querySelector('[onclick="enviarWhatsApp()"]');
   if(btn){btn.disabled=true;btn.textContent='Generando...';}
-  const nroOrden=await generarNroOrden();
+  const nroOrden=await _getOrden();
   if(btn){btn.disabled=false;btn.textContent='💬 Enviar por WhatsApp';}
   const tot=carrito.reduce((s,it)=>s+it.precioTotal,0);
   const fecha=new Date().toLocaleDateString('es-AR');
