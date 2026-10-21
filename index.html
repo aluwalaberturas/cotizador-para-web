@@ -445,6 +445,7 @@ header{
         </div>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
           <button class="btn-clear" onclick="abrirModal()">⬇ Descargar PDF</button>
+          <button class="btn-clear" onclick="enviarWhatsApp()" style="background:#25D366;color:#fff;border-color:#25D366;">💬 Enviar por WhatsApp</button>
           <button class="btn-clear" id="btnEnviarInterno" onclick="enviarAlInterno()" style="display:none;background:#111;color:#fff;border-color:#111">→ Presupuesto interno</button>
           <button class="btn-clear" onclick="limpiarCarrito()">Limpiar todo</button>
         </div>
@@ -1656,6 +1657,19 @@ async function confirmarPedido(){
   if(btnConfirmar){btnConfirmar.disabled=false;btnConfirmar.textContent=textoOriginal;}
   alert("✅ ¡Presupuesto registrado!\n\nTu número de orden es:\n\n" + nroOrden + "\n\nGuardalo para hacer seguimiento de tu pedido.\nSe descargará el PDF a continuación.");
   descargarPDF(nroOrden,nombre,apellido);
+}
+
+function enviarWhatsApp(){
+  if(carrito.length===0){alert('Agregá productos al presupuesto primero');return;}
+  const tot=carrito.reduce((s,it)=>s+it.precioTotal,0);
+  let msg='¡Hola Aluwal! Quiero consultar por este presupuesto:\n\n';
+  carrito.forEach((it,i)=>{
+    msg+=`${i+1}. ${TLBL[it.tipo]||it.tipo}\n`;
+    msg+=`   ${it.ancho}×${it.alto}mm · ${it.color.charAt(0).toUpperCase()+it.color.slice(1)} · ${VLBL[it.vidrio]||it.vidrio} · x${it.cantidad}\n`;
+    msg+=`   Subtotal: $${fmt(it.precioTotal)}\n\n`;
+  });
+  msg+=`*Total estimado: $${fmt(tot)}*\n\n_Generado en aluwalaberturas.com_`;
+  window.open('https://wa.me/5491123948049?text='+encodeURIComponent(msg),'_blank');
 }
 
 function descargarPDF(nroOrden,nombre,apellido){
