@@ -1341,6 +1341,7 @@ function _agregarCard(id){
     c.inCarrito=true;
     carrito.push(item);
   }
+  _nroOrden=null;
   renderCarrito();
   c.collapsed=true;
   _rebuildCard(id);
@@ -1617,9 +1618,10 @@ function quitarItem(i){
   }
   carrito.splice(i,1);
   _cards.forEach(c=>{if(c.inCarrito&&c.carritoIdx>i)c.carritoIdx--;});
+  _nroOrden=null;
   renderCarrito();
 }
-function limpiarCarrito(){carrito=[];renderCarrito();}
+function limpiarCarrito(){carrito=[];_nroOrden=null;renderCarrito();}
 function enviarAlInterno(){
   if(carrito.length===0){alert('Agregá productos al presupuesto primero');return;}
   window.parent.postMessage({
