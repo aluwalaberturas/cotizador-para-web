@@ -1153,7 +1153,7 @@ function _buildCardHTML(card,num){
     +'<div class="cf-field"><div class="cf-label" style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;">Alto ('+ul+')</div><input type="number" min="'+minV+'" max="'+maxA+'" step="'+step+'" placeholder="'+phH+'" value="'+vH+'" oninput="_setAlto('+card.id+',_useCm?Math.round(this.value*10):+this.value)"></div></div>'
     +'<div style="font-size:10px;color:#aaa;margin-top:-16px;margin-bottom:22px;">Las medidas están expresadas en '+nota+'.</div>';
     })()}
-    ${card.vidrio?`${_cardSLBL("Cantidad")}<div class="qty-ctrl" style="margin-bottom:22px;"><button onclick="_setQty(${card.id},-1)">−</button><span class="qty-val" id="qty_${card.id}">${card.cantidad}</span><button onclick="_setQty(${card.id},+1)">+</button></div>${_cardSLBL("Extras")}<div class="extras-grid" style="margin-bottom:22px;">${extrasHTML}</div><button class="btn-agregar" onclick="_agregarCard(${card.id})">${card.inCarrito?"Actualizar presupuesto →":"Agregar al presupuesto →"}</button>`:""}
+    ${card.vidrio?`${_cardSLBL("Cantidad")}<div class="qty-ctrl" style="margin-bottom:22px;"><button onclick="_setQty(${card.id},-1)">−</button><span class="qty-val" id="qty_${card.id}">${card.cantidad}</span><button onclick="_setQty(${card.id},+1)">+</button></div>${_cardSLBL("Extras")}<div class="extras-grid" style="margin-bottom:22px;">${extrasHTML}</div><button class="btn-agregar" style="${card.inCarrito?"background:#16a34a;":""}padding:16px;font-size:11px;" onclick="_agregarCard(${card.id})">${card.inCarrito?"✓ Actualizar precio →":"Agregar al presupuesto →"}</button>`:""}
   </div>
   <div class="aber-right">
     ${(()=>{
@@ -1283,7 +1283,7 @@ function _toggleCard(id,e){if(e.target.closest('button'))return;const c=_getCard
 function _editCard(id){const c=_getCard(id);if(!c)return;c.collapsed=false;_rebuildCard(id);requestAnimationFrame(()=>{const el=document.querySelector(`[data-card-id="${id}"]`);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});}
 function _editFromCarrito(i){const c=_cards.find(c=>c.inCarrito&&c.carritoIdx===i);if(c)_editCard(c.id);}
 function _setLinea(id,val){const c=_getCard(id);if(!c)return;c.linea=val;c.color=null;c.tipo=null;c.vidrio=null;_rebuildCard(id);}
-function _setColor(id,val){const c=_getCard(id);if(!c)return;c.color=val;c.tipo=null;c.vidrio=null;_rebuildCard(id);}
+function _setColor(id,val){const c=_getCard(id);if(!c)return;c.color=val;_rebuildCard(id);}
 function _setTipo(id,val){const c=_getCard(id);if(!c)return;c.tipo=val;c.vidrio=null;_rebuildCard(id);}
 function _toggleUnit(cm){_useCm=cm;_renderCards();}
 function _setVidrio(id,val){const c=_getCard(id);if(!c)return;c.vidrio=val;_rebuildCard(id);}
