@@ -1697,10 +1697,20 @@ async function confirmarPedido(){
   descargarPDF(nroOrden,nombre,apellido);
 }
 
-function enviarWhatsApp(){
+async function enviarWhatsApp(){
   if(carrito.length===0){alert('Agregá productos al presupuesto primero');return;}
+  const btn=document.querySelector('[onclick="enviarWhatsApp()"]');
+  if(btn){btn.disabled=true;btn.textContent='Generando...';}
+  const nroOrden=await generarNroOrden();
+  if(btn){btn.disabled=false;btn.textContent='💬 Enviar por WhatsApp';}
   const tot=carrito.reduce((s,it)=>s+it.precioTotal,0);
-  let msg=`*Nuevo presupuesto*\n`;
+  const fecha=new Date().toLocaleDateString('es-AR');
+  const detalle=carrito.map(it=>`${TLBL[it.tipo]} ${it.ancho}x${it.alto}mm ${it.color} ${VLBL[it.vidrio]} x${it.cantidad}`).join(' | ');
+  // Guardar en Sheets
+  if(nroOrden){
+    fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:JSON.stringify({orden:nroOrden,fecha,nombre:_cliNombre||'-',apellido:'-',email:'-',celular:_cliCelular||'-',detalle,total:'$'+fmt(tot)})}).catch(()=>{});
+  }
+  let msg=`*Presupuesto Aluwal${nroOrden?' — '+nroOrden:''}*\n`;
   if(_cliNombre) msg+=`Cliente: ${_cliNombre}`;
   if(_cliCelular) msg+=` | ${_cliCelular}`;
   msg+='\n\n';
@@ -1709,7 +1719,7 @@ function enviarWhatsApp(){
     msg+=`   ${it.ancho}×${it.alto}mm · ${it.color.charAt(0).toUpperCase()+it.color.slice(1)} · ${VLBL[it.vidrio]||it.vidrio} · x${it.cantidad}\n`;
     msg+=`   Subtotal: $${fmt(it.precioTotal)}\n\n`;
   });
-  msg+=`*Total estimado: $${fmt(tot)}*\n\n_Generado en aluwalaberturas.com_`;
+  msg+=`*Total estimado: $${fmt(tot)}*\n\n_aluwalaberturas.com_`;
   window.open('https://wa.me/5491123948049?text='+encodeURIComponent(msg),'_blank');
 }
 
