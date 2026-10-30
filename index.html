@@ -1652,9 +1652,13 @@ function fetchConTimeout(url,opciones,ms){
   return fetch(url,{...opciones,signal:ctrl.signal}).finally(()=>clearTimeout(id));
 }
 
-function _guardarEnSisPresCache(nroOrden, nombre, fecha){
+async function _guardarEnFirebase(nroOrden, nombre, fecha){
   try{
-    const cache = JSON.parse(localStorage.getItem('sisPresCache')||'[]');
+    const { initializeApp, getApps } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+    const { getFirestore, doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const cfg = {apiKey:"AIzaSyCshw1t7OXjTbg8ebvQzLn3VKxbY94cuRI",authDomain:"aluwal-ventas.firebaseapp.com",projectId:"aluwal-ventas",storageBucket:"aluwal-ventas.firebasestorage.app",messagingSenderId:"1016364782945",appId:"1:1016364782945:web:0eabc4b024666d6e5d2120"};
+    const app = getApps().length ? getApps()[0] : initializeApp(cfg);
+    const db = getFirestore(app);
     const items = carrito.map(it=>({
       custom:true,
       linea: it.linea||'modena',
@@ -1664,13 +1668,16 @@ function _guardarEnSisPresCache(nroOrden, nombre, fecha){
       alto: it.alto,
       vidrio: it.vidrio||'dvh',
       cantidad: it.cantidad||1,
-      opc: it.opc||[]
+      opc: []
     }));
-    const idx = cache.findIndex(p=>String(p.num)===String(nroOrden));
-    const entry = {num:nroOrden, fecha:fecha||new Date().toISOString().slice(0,10), cliente:nombre||'—', dir:'', localidad:'', items, estado:'presupuesto', vendedor:''};
-    if(idx>=0) cache[idx]=entry; else cache.push(entry);
-    localStorage.setItem('sisPresCache', JSON.stringify(cache));
-  }catch(e){}
+    await setDoc(doc(db,'presupuestos_web', String(nroOrden)),{
+      num: nroOrden,
+      fecha: fecha||new Date().toISOString().slice(0,10),
+      cliente: nombre||'—',
+      items,
+      estado: 'presupuesto'
+    });
+  }catch(e){ console.warn('Firebase presupuesto_web error:',e); }
 }
 
 async function generarNroOrden(){
@@ -1719,7 +1726,7 @@ async function confirmarPedido(){
     body:JSON.stringify({orden:nroOrden,fecha,nombre,apellido,email,celular,detalle,total:"$"+fmt(tot)})
   }).catch(()=>console.warn("POST a Sheets falló, orden:",nroOrden));
 
-  _guardarEnSisPresCache(nroOrden, nombre+' '+apellido, new Date().toISOString().slice(0,10));
+  _guardarEnFirebase(nroOrden, nombre+' '+apellido, new Date().toISOString().slice(0,10));
   document.getElementById("modalCliente").style.display="none";
   if(btnConfirmar){btnConfirmar.disabled=false;btnConfirmar.textContent=textoOriginal;}
   alert("✅ ¡Presupuesto registrado!\n\nTu número de orden es:\n\n" + nroOrden + "\n\nGuardalo para hacer seguimiento de tu pedido.\nSe descargará el PDF a continuación.");
@@ -1738,7 +1745,7 @@ async function enviarWhatsApp(){
   // Guardar en Sheets
   if(nroOrden){
     fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',body:JSON.stringify({orden:nroOrden,fecha,nombre:_cliNombre||'-',apellido:'-',email:'-',celular:_cliCelular||'-',detalle,total:'$'+fmt(tot)})}).catch(()=>{});
-    _guardarEnSisPresCache(nroOrden, _cliNombre||'—', new Date().toISOString().slice(0,10));
+    _guardarEnFirebase(nroOrden, _cliNombre||'—', new Date().toISOString().slice(0,10));
   }
   let msg=`*Presupuesto Aluwal${nroOrden?' — '+nroOrden:''}*\n`;
   if(_cliNombre) msg+=`Cliente: ${_cliNombre}`;
