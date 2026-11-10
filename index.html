@@ -1628,7 +1628,7 @@ function enviarAlInterno(){
   window.parent.postMessage({
     type:'aluwal_cart',
     items:carrito.map(it=>({
-      tipo:it.tipo,ancho:it.ancho,alto:it.alto,cantidad:it.cantidad,
+      tipo:it.tipo,linea:it.linea,ancho:it.ancho,alto:it.alto,cantidad:it.cantidad,
       color:it.color,vidrio:it.vidrio,precioUnit:it.precioUnit,precioTotal:it.precioTotal,
       label:(TLBL[it.tipo]||it.tipo)+' '+it.ancho+'×'+it.alto+'mm '+it.color+' '+(VLBL[it.vidrio]||it.vidrio)
     }))
