@@ -1760,8 +1760,11 @@ async function enviarWhatsApp(){
   if(_cliCelular) msg+=` | ${_cliCelular}`;
   msg+='\n\n';
   carrito.forEach((it,i)=>{
-    msg+=`${i+1}. ${TLBL[it.tipo]||it.tipo}\n`;
+    const _lin=it.linea==='a30'?'A30':it.linea==='modena'?'Módena':'';
+    const _ext=(it.opc||[]).filter(o=>OPC_LBL[o]).map(o=>OPC_LBL[o]);
+    msg+=`${i+1}. ${_lin?_lin+' · ':''}${TLBL[it.tipo]||it.tipo}\n`;
     msg+=`   ${it.ancho}×${it.alto}mm · ${it.color.charAt(0).toUpperCase()+it.color.slice(1)} · ${VLBL[it.vidrio]||it.vidrio} · x${it.cantidad}\n`;
+    if(_ext.length) msg+=`   Extras: ${_ext.join(', ')}\n`;
     msg+=`   Subtotal: $${fmt(it.precioTotal)}\n\n`;
   });
   msg+=`*Total estimado: $${fmt(tot)}*\n\n_aluwalaberturas.com_`;
