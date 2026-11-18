@@ -1988,6 +1988,7 @@ function ppSubTab(group,id){
   const sub=document.getElementById('pp'+group+'-'+id);
   if(sub)sub.classList.add('active');
 }
+let _ppSoloLeer=false; // al cargar la página solo se leen precios, no se guardan en la Sheet
 function ppApply(){
   const n=(id)=>parseFloat(document.getElementById('pp_'+id).value)||0;
   KGm.blanco=n('KGm_blanco');KGm.negro=n('KGm_negro');KGm.anodizado=n('KGm_anodizado');KGm.similmadera=n('KGm_similmadera');
@@ -2031,7 +2032,7 @@ function ppApply(){
         s[k]=val;
       }
     });
-    fetch(PRECIOS_URL,{
+    if(!_ppSoloLeer) fetch(PRECIOS_URL,{
       method:'POST',
       mode:'no-cors',
       body:JSON.stringify({password:'aluwal2024',prices:s})
@@ -2106,11 +2107,11 @@ fetch(PRECIOS_URL+'?t='+Date.now())
       const _h103=document.getElementById('pp_H103_u');if(_h103)_h103.value=18000;
       const _b52=document.getElementById('pp_B52_P');if(_b52)_b52.value=450;
     }
-    ppApply();_ppReady=true;
+    _ppSoloLeer=true;ppApply();_ppSoloLeer=false;_ppReady=true;
   })
   .catch(e=>{
     console.warn('No se pudieron cargar precios de Sheets, usando defaults',e);
-    ppApply();_ppReady=true;
+    _ppSoloLeer=true;ppApply();_ppSoloLeer=false;_ppReady=true;
   });
 if(new URLSearchParams(window.location.search).get("admin")==="aluwal2024")ppShowPass();
 </script>
