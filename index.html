@@ -1988,6 +1988,7 @@ function ppSubTab(group,id){
   const sub=document.getElementById('pp'+group+'-'+id);
   if(sub)sub.classList.add('active');
 }
+const PP_GUARDAR_EN_SHEET=false; // desactivado: los precios se cambian directo en la Sheet (tiene fórmulas por dólar)
 let _ppSoloLeer=false; // al cargar la página solo se leen precios, no se guardan en la Sheet
 function ppApply(){
   const n=(id)=>parseFloat(document.getElementById('pp_'+id).value)||0;
@@ -2032,7 +2033,7 @@ function ppApply(){
         s[k]=val;
       }
     });
-    if(!_ppSoloLeer) fetch(PRECIOS_URL,{
+    if(PP_GUARDAR_EN_SHEET && !_ppSoloLeer) fetch(PRECIOS_URL,{
       method:'POST',
       mode:'no-cors',
       body:JSON.stringify({password:'aluwal2024',prices:s})
@@ -2040,7 +2041,7 @@ function ppApply(){
   }catch(e){console.warn('No se pudieron guardar precios en Sheets',e);}
   actualizarPreview();
   const st=document.getElementById('pp-status');
-  st.textContent='✓ Cambios aplicados y guardados — '+(new Date().toLocaleTimeString());
+  st.textContent='✓ Aplicado solo en esta pantalla (no se guarda: los precios se cambian en la Sheet) — '+(new Date().toLocaleTimeString());
   setTimeout(()=>{st.textContent='Los cambios se aplican al instante al cotizador.';},3000);
 }
 function ppReset(){
